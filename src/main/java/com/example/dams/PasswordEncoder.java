@@ -5,10 +5,10 @@ public class PasswordEncoder {
 
     public static void main(String[] args){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "1234567";
+        String rawPassword = "iceice";
         String encodedPassword = encoder.encode(rawPassword);
 
-        System.out.println(encodedPassword);
+        System.out.println(encodedPassword.length());
 
 
     }

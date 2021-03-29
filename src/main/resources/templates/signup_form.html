@@ -16,33 +16,73 @@
     >
         <div class="m-3">
             <div class="form-group row">
-                <label class="col-form-label col-4">E-mail</label>
-                <div class=""col-8>
-                    <input type="email" class="form-control" th:field="*{email}" required/>
+                <label class="col-form-label col-4">Username</label>
+                <div class="">
+                    <label>
+                        <input type="text" class="form-control" th:field="*{username}" required/>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="role", class="col-form-label col-4">Choose a role:</label>
+                <div class="">
+                <select name="role" id="role" th:field="*{role}" required>
+                    <option value= ""></option>
+                    <option value="donor">Donor</option>
+                    <option value="recipient">Recipient</option>
+                </select>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-form-label col-4">Password</label>
-                <div class=""col-8>
-                    <input type="password" class="form-control"th:field="*{password}" required
-                           minlength="6" maxlength="10"/>
+                <div class="">
+                    <label>
+                        <input type="password" class="form-control" th:field="*{password}" required
+                               minlength="6" maxlength="10"/>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="question1", class="col-form-label col-4">Choose Another Security Question:</label>
+                <div class="">
+                    <select name="question1" id="question1" th:field="*{question1}" required>
+                        <option value=""></option>
+                        <option value="What is the brand of your first car?">What is the brand of your first car?</option>
+                        <option value="What is your favorite vacation spot?">What is your favorite vacation spot?</option>
+                        <option value="What is your favorite color?">What is your favorite color?</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-form-label col-4">First Name</label>
-                <div class=""col-8>
-                    <input type="text" class="form-control"th:field="*{firstName}" required
-                           minlength="2" maxlength="20"/>
+                <label class="col-form-label col-4">Answer to Security Question 1</label>
+                <div class="">
+                    <label>
+                        <input type="text" class="form-control" th:field="*{answer1}" required
+                               minlength="2" maxlength="20"/>
+                    </label>
                 </div>
             </div>
-
             <div class="form-group row">
-                <label class="col-form-label col-4">Last Name</label>
-                <div class=""col-8>
-                    <input type="text" class="form-control"th:field="*{lastName}" required
-                           minlength="2" maxlength="20"/>
+                <label for="question2", class="col-form-label col-4">Choose Another Security Question:</label>
+                <div class="">
+                    <select name="question2" id="question2" th:field="*{question2}" required>
+                        <option value=""></option>
+                        <option value="What is your hometown?">What is your hometown?</option>
+                        <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                        <option value="Where did you attend school?">Where did you attend school?</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-4">Answer to Security Question 2</label>
+                <div class="">
+                    <label>
+                        <input type="text" class="form-control" th:field="*{answer2}" required
+                               minlength="2" maxlength="20"/>
+                    </label>
                 </div>
             </div>
 
