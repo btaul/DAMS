@@ -1,4 +1,4 @@
-// Configuration class for Form Automation project
+package com.test;// Configuration class for Form Automation project
 
 
 public class BaseUrl {

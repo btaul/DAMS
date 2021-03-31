@@ -1,11 +1,11 @@
-// Page URL: http://localhost:8084
+package com.test;// Page URL: http://localhost:8084
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-
 public class WebHomePage extends PageObject{
+
 
     @FindBy(linkText = "Login")
     private WebElement login;
@@ -15,6 +15,7 @@ public class WebHomePage extends PageObject{
 
     @FindBy(linkText = "List All Users")
     private WebElement listAllUsers;
+
 
     public WebHomePage(WebDriver driver) {
         super(driver);
@@ -40,6 +41,8 @@ public class WebHomePage extends PageObject{
     public void clickListAllUsers(){
         this.listAllUsers.click();
     }
+
+
 
 
 }

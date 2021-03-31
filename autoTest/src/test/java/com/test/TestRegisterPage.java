@@ -1,3 +1,7 @@
+package com.test;
+
+import com.test.BaseUrl;
+import com.test.WebHomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -6,12 +10,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import java.util.concurrent.TimeUnit;
 
 
+public class TestRegisterPage {
 
 
-public class TestLoginPage {
     private static final WebDriver driver = new ChromeDriver();
 
     @BeforeSuite
@@ -25,25 +28,37 @@ public class TestLoginPage {
         //Navigate from Homepage to Loginpage
         driver.get(BaseUrl.BASE_URL);
         WebHomePage webHomePage = new WebHomePage(driver);
-        webHomePage.clickLogin();
+
+        webHomePage.clickRegister();
     }
 
 
     @Test(testName = "Test Login Button")
-    public static void testLogin() throws InterruptedException {
+    public static void testRegister() throws InterruptedException {
         navigateToLogin();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/login");
+        assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
         JavascriptExecutor jse = (JavascriptExecutor)driver;
-        WebElement wb = driver.findElement(By.id("username"));
-        jse.executeScript("arguments[0].value='junnan-wang@uiowa.edu';", wb);
-        jse.executeScript("document.getElementById('password').value='1234567';");
-        wb = driver.findElement(By.cssSelector("body > div > form > button"));
+        WebElement wb;
+        wb = driver.findElement(By.id("email"));
+        jse.executeScript("arguments[0].value='Wangjunnan2@gmail.com';", wb);
+        wb = driver.findElement(By.id("password"));
+        jse.executeScript("arguments[0].value='1234567';", wb);
+        wb = driver.findElement(By.id("firstName"));
+        jse.executeScript("arguments[0].value='Junnan';", wb);
+        wb = driver.findElement(By.id("lastName"));
+        jse.executeScript("arguments[0].value='Wang';", wb);
+        wb = driver.findElement(By.cssSelector("body > div > form > div > div:nth-child(5) > button"));
         jse.executeScript("arguments[0].click()", wb);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/process_register");
         //Thread.sleep(5000);
-        assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
 
     }
+
+
+
+
+
 
 
 
@@ -55,7 +70,4 @@ public class TestLoginPage {
         driver.manage().deleteAllCookies();
         driver.close();
     }
-
-
-
 }
