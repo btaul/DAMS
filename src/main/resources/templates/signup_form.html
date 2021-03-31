@@ -10,7 +10,7 @@
     <div>
         <h1>User Registration - Sign Up</h1>
     </div>
-    <form th:action="@{/process_register}" method="post"
+    <form th:action="@{/register}" method="post"
           style="max-width: 600px; margin: 0 auto;"
           th:object="${user}"
     >
@@ -40,7 +40,7 @@
                 <div class="">
                     <label>
                         <input type="password" class="form-control" th:field="*{password}" required
-                               minlength="6" maxlength="10"/>
+                                  minlength="6" maxlength="10"/>
                     </label>
                 </div>
             </div>

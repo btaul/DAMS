@@ -1,8 +1,5 @@
 package com.example.dams;
-
-
 import javax.persistence.*;
-
 @Entity
 @Table(name = "login")
 public class User {
@@ -30,6 +27,12 @@ public class User {
 
     @Column(nullable = false, length = 45)
     private String status;
+
+    private boolean bad = false;
+
+    public boolean isBad() { return bad; }
+
+    public void setBad(boolean bad) { this.bad = bad; }
 
     public String getStatus() {
         return status;
@@ -94,4 +97,30 @@ public class User {
     public void setAnswer2(String answer2) {
         this.answer2 = answer2;
     }
+
+    public boolean checkStructure(){
+            String passwordUser = getPassword();
+            char[] chars = passwordUser.toCharArray();
+            StringBuilder numbers = new StringBuilder();
+            StringBuilder upLetters = new StringBuilder();
+            StringBuilder lowLetters = new StringBuilder();
+            StringBuilder specialCase = new StringBuilder();
+            for(char c : chars){
+                if(Character.isDigit(c)){
+                    numbers.append(c);
+                }
+                else if(Character.isUpperCase(c)){
+                    upLetters.append(c);
+                }
+                else if(Character.isLowerCase(c)){
+                    lowLetters.append(c);
+                }
+                else{
+                    specialCase.append(c);
+                }
+            }
+        return(numbers.length() != 0 && upLetters.length() != 0 && lowLetters.length() != 0 && specialCase.length() != 0);
+    }
 }
+
+
