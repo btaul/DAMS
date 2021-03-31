@@ -12,27 +12,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-public class UserRepositoryTests {
+public class UserRepositoryTests {}
 
-    @Autowired
-    private UserRepository repo;
+//    @Autowired
+//    private UserRepository repo;
 
-    @Autowired
-    private TestEntityManager entityManager;
+//    @Autowired
+//    private TestEntityManager entityManager;
 
+    /*
     @Test
     public void testCreateUser(){
         User user = new User();
-         /*
-        user.setEmail("junnan-wang@uiowa.edu");
-        user.setPassword("wang63721267");
-        user.setFirstName("Junnan");
-        user.setLastName("Wang");
-        */
 
 
 
-        user.setEmail("alex@gmail.com");
+        user.setUsername("alex@gmail.com");
         user.setPassword("alex2020");
         user.setFirstName("Alexander");
         user.setLastName("Hebb");
@@ -59,7 +54,7 @@ public class UserRepositoryTests {
 
 }
 
-
+*/
 
 
 
