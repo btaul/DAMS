@@ -1,7 +1,5 @@
 package com.example.dams;
 
-
-import ch.qos.logback.core.pattern.color.BoldCyanCompositeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,12 +26,12 @@ public class AppController {
         return "signup_form";
     }
 
-    @PostMapping("/process_register")
+    @PostMapping("/register")
     public String processRegistration(User user){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
+        user.setStatus("active");
         repo.save(user);
         return "register_success";
     }
