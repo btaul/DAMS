@@ -34,10 +34,9 @@ public class TestLoginPage {
     public static void testLogin() throws InterruptedException {
         navigateToLogin();
         assert driver.getCurrentUrl().equals("http://localhost:8084/login");
-
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         WebElement wb = driver.findElement(By.id("username"));
-        jse.executeScript("arguments[0].value='junnan-wang@uiowa.edu';", wb);
+        jse.executeScript("arguments[0].value='junnwang';", wb);
         jse.executeScript("document.getElementById('password').value='1234567';");
         wb = driver.findElement(By.cssSelector("body > div > form > button"));
         jse.executeScript("arguments[0].click()", wb);

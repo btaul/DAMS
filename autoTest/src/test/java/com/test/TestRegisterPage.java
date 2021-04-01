@@ -40,17 +40,24 @@ public class TestRegisterPage {
 
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         WebElement wb;
-        wb = driver.findElement(By.id("email"));
-        jse.executeScript("arguments[0].value='Wangjunnan2@gmail.com';", wb);
+        wb = driver.findElement(By.id("username"));
+        jse.executeScript("arguments[0].value='Wangjunnan@gmail1.com';", wb);
+        wb = driver.findElement(By.id("role"));
+        jse.executeScript("arguments[0].value='donor';", wb);
         wb = driver.findElement(By.id("password"));
         jse.executeScript("arguments[0].value='1234567';", wb);
-        wb = driver.findElement(By.id("firstName"));
-        jse.executeScript("arguments[0].value='Junnan';", wb);
-        wb = driver.findElement(By.id("lastName"));
-        jse.executeScript("arguments[0].value='Wang';", wb);
-        wb = driver.findElement(By.cssSelector("body > div > form > div > div:nth-child(5) > button"));
+        wb = driver.findElement(By.id("question1"));
+        jse.executeScript("arguments[0].value='What is the brand of your first car?';", wb);
+        wb = driver.findElement(By.id("answer1"));
+        jse.executeScript("arguments[0].value='civic';", wb);
+        wb = driver.findElement(By.id("question2"));
+        jse.executeScript("arguments[0].value='What is your hometown?';", wb);
+        wb = driver.findElement(By.id("answer2"));
+        jse.executeScript("arguments[0].value='China';", wb);
+        wb = driver.findElement(By.cssSelector("body > div > form > div > div:nth-child(8) > button"));
         jse.executeScript("arguments[0].click()", wb);
-        assert driver.getCurrentUrl().equals("http://localhost:8084/process_register");
+        assert driver.getCurrentUrl().equals("http://localhost:8084/register");
+
         //Thread.sleep(5000);
 
     }
