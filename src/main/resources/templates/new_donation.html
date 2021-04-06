@@ -14,7 +14,7 @@
     <hr>
     <h2>Save Donation</h2>
 
-    <form action="#" th:action="@{/saveDonation}" th:object="${employee}"
+    <form action="#" th:action="@{/saveDonation}" th:object="${donation}"
           method="POST">
         <input type="text" th:field="*{eventId}"
                placeholder="eventId" class="form-control mb-4 col-4">

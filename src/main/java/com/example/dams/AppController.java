@@ -18,6 +18,9 @@ public class AppController {
     @Autowired
     private EventService eRepo;
 
+    @Autowired
+    private DonationService donationService;
+
     @GetMapping("")
     public String viewHomePage(){
         return "index";
@@ -61,11 +64,10 @@ public class AppController {
         return "events";
     }
 
-    @Autowired
-    private EmployeeService employeeService;
 
-    // display list of employees
-    @GetMapping("/employee")
+
+    // display list of donations
+    @GetMapping("/donation")
     public String viewHomePage(Model model) {
         return findPaginated(1, "eventId", "asc", model);
     }
@@ -73,24 +75,24 @@ public class AppController {
     @GetMapping("/showNewDonationForm")
     public String showNewDonationForm(Model model) {
         // create model attribute to bind form data
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
-        return "new_employee";
+        Donation donation = new Donation();
+        model.addAttribute("donation", donation);
+        return "new_donation";
     }
 
     @GetMapping("/backtoDonation")
     public String backtoDonation(Model model) {
         // create model attribute to bind form data
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
-        return "redirect:/employee";
+        Donation donation = new Donation();
+        model.addAttribute("donation", donation);
+        return "redirect:/donation";
     }
 
     @PostMapping("/saveDonation")
-    public String saveDonation(@ModelAttribute("employee") Employee employee) {
-        // save employee to database
-        employeeService.saveEmployee(employee);
-        return "redirect:/employee";
+    public String saveDonation(@ModelAttribute("donation") Donation donation) {
+        // save donation to database
+        donationService.saveDonation(donation);
+        return "redirect:/donation";
     }
 
 
@@ -98,20 +100,20 @@ public class AppController {
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
 
-        // get employee from the service
-        Employee employee = employeeService.getEmployeeById(id);
+        // get donation from the service
+        Donation donation = donationService.getDonationById(id);
 
-        // set employee as a model attribute to pre-populate the form
-        model.addAttribute("employee", employee);
-        return "update_employee";
+        // set donation as a model attribute to pre-populate the form
+        model.addAttribute("donation", donation);
+        return "update_donation";
     }
 
     @GetMapping("/deleteDonation/{id}")
     public String deleteDonation(@PathVariable (value = "id") long id) {
 
-        // call delete employee method
-        this.employeeService.deleteEmployeeById(id);
-        return "redirect:/employee";
+        // call delete donation method
+        this.donationService.deleteDonationById(id);
+        return "redirect:/donation";
     }
 
 
@@ -123,8 +125,8 @@ public class AppController {
                                 Model model) {
         int pageSize = 5;
 
-        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Employee> listEmployees = page.getContent();
+        Page<Donation> page = donationService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Donation> listDonations = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -134,8 +136,8 @@ public class AppController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
-        model.addAttribute("listEmployees", listEmployees);
-        return "index1";
+        model.addAttribute("listDonations", listDonations);
+        return "donation";
     }
 
 
