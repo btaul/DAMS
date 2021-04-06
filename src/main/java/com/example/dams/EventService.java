@@ -20,7 +20,7 @@ public class EventService {
         RowMapper<Event> rm = new RowMapper<Event>() {
             @Override
             public Event mapRow(ResultSet resultSet, int i) throws SQLException {
-                Event event = new Event(resultSet.getLong("event"),
+                Event event = new Event(resultSet.getString("event"),
                         resultSet.getString("requester"),
                         resultSet.getString("status"),
                         resultSet.getString("item"),

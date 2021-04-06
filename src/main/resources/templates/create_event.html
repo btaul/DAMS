@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Event - DAMS</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+            </p>
+            <input type="submit" value="Sign Out">
+        </form>
+    </div>
+    <h1>Create Event</h1>
+    <h3><a th:href="@{/list_events}">List All Events</a></h3>
+</div>
+<form th:action="@{/create}" method="post"
+      style="max-width: 600px; margin: 0 auto;"
+      th:object="${event}"
+>
+    <div class="m-3">
+        <div class="form-group row">
+            <label class="col-form-label col-4">Item</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" th:field="*{item}" required/>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-4">Volume</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" th:field="*{volume}" required/>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-4">Zip Code</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" th:field="*{zip}" required/>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-4">Address</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" th:field="*{address}" required/>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </div>
+    </div>
+    </form>
+</body>

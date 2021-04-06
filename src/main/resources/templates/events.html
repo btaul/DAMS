@@ -15,6 +15,7 @@
     <div>
         <h1>List of All Events</h1>
         <h3><a th:href="@{/list_users}">List All Users</a></h3>
+        <h3><a th:href="@{/create}">Create Event</a></h3>
     </div>
     <div>
         <table class="table table-striped table-bordered">
@@ -30,11 +31,12 @@
                 <th>Address</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="event: ${listEvents}">
-                <td th:text="${event.id}">Event ID</td>
+                <td th:text="${event.event}">Event ID</td>
                 <td th:text="${event.requester}">Requester</td>
                 <td th:text="${event.status}">Status</td>
                 <td th:text="${event.item}">Item</td>
@@ -44,6 +46,11 @@
                 <td th:text="${event.address}">Address</td>
                 <td th:text="${event.start}">Start Date</td>
                 <td th:text="${event.end}">End Date</td>
+                <td><form th:action="@{'/delete/' + ${event.event}}" method="post">
+                    <div>
+                        <button type="submit" value="Delete">Delete</button>
+                    </div>
+                </form></td>
             </tr>
             </tbody>
         </table>
