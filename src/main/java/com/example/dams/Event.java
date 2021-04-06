@@ -8,20 +8,8 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(nullable = false, unique = true, length = 45)
-    public String requester;
-
     @Column(nullable = false, length = 20)
     public String status;
-
-    @Column(nullable = false, length = 40)
-    public String item;
-
-    @Column(nullable = false, length = 20)
-    public Integer volume;
-
-    @Column(nullable = false, length = 20)
-    public Integer remaining;
 
     @Column(nullable = false, length = 20)
     public Integer zip;
@@ -35,21 +23,29 @@ public class Event {
     @Column(nullable = false, length = 20)
     public String end;
 
-    public Event(Long id, String requester, String status, String item, Integer volume, Integer remaining, Integer zip, String address, String start, String end) {
+    @Column(nullable = false, length = 45)
+    public String event;
+
+    public Event(Long id, String status, Integer zip, String address, String start, String end, String event) {
         this.id = id;
-        this.requester = requester;
         this.status = status;
-        this.item = item;
-        this.volume = volume;
-        this.remaining = remaining;
         this.zip = zip;
         this.address = address;
         this.start = start;
         this.end = end;
+        this.event = event;
     }
 
     public Event() {
 
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
     }
 
     public Long getId() {
@@ -60,44 +56,12 @@ public class Event {
         this.id = id;
     }
 
-    public String getRequester() {
-        return requester;
-    }
-
-    public void setRequester(String requester) {
-        this.requester = requester;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public Integer getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Integer volume) {
-        this.volume = volume;
-    }
-
-    public Integer getRemaining() {
-        return remaining;
-    }
-
-    public void setRemaining(Integer remaining) {
-        this.remaining = remaining;
     }
 
     public Integer getZip() {

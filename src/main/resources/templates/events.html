@@ -21,11 +21,8 @@
             <thead class=""thread-dark>
             <tr>
                 <th>Event ID</th>
-                <th>Requester</th>
+                <th>Description</th>
                 <th>Status</th>
-                <th>Item</th>
-                <th>Volume</th>
-                <th>Remaining Volume</th>
                 <th>Zip Code</th>
                 <th>Address</th>
                 <th>Start Date</th>
@@ -35,11 +32,8 @@
             <tbody>
             <tr th:each="event: ${listEvents}">
                 <td th:text="${event.id}">Event ID</td>
-                <td th:text="${event.requester}">Requester</td>
+                <td th:text="${event.event}">Description</td>
                 <td th:text="${event.status}">Status</td>
-                <td th:text="${event.item}">Item</td>
-                <td th:text="${event.volume}">Volume</td>
-                <td th:text="${event.remaining}">Remaining Volume</td>
                 <td th:text="${event.zip}">Zip Code</td>
                 <td th:text="${event.address}">Address</td>
                 <td th:text="${event.start}">Start Date</td>
