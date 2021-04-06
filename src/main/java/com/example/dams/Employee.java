@@ -16,13 +16,17 @@ public class Employee {
     private long id;
 
     @Column(name = "eventId")
-    private String firstName;
+    private String eventId;
 
     @Column(name = "donorId")
-    private String lastName;
+    private String donorId;
 
-    @Column(name = "DonationVolume")
-    private String email;
+    @Column(name = "item")
+    private String item;
+
+    @Column(name = "donationVolume")
+    private String donationVolume;
+
 
 
     public long getId() {
@@ -31,22 +35,32 @@ public class Employee {
     public void setId(long id) {
         this.id = id;
     }
-    public String getFirstName() {
-        return firstName;
+    public String getEventId() {
+        return eventId;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
-    public String getLastName() {
-        return lastName;
+    public String getDonorId() {
+        return donorId;
     }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setDonorId(String donarId) {
+        this.donorId = donarId;
     }
-    public String getEmail() {
-        return email;
+    public String getItem() {
+        return item;
     }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setItem(String item) {
+        this.item = item;
     }
+
+    public String getDonationVolume() {
+        return donationVolume;
+    }
+    public void setDonationVolume(String donationVolume) {
+        this.donationVolume = donationVolume;
+    }
+
+
+
 }

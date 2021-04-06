@@ -67,27 +67,27 @@ public class AppController {
     // display list of employees
     @GetMapping("/employee")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "firstName", "asc", model);
+        return findPaginated(1, "eventId", "asc", model);
     }
 
-    @GetMapping("/showNewEmployeeForm")
-    public String showNewEmployeeForm(Model model) {
+    @GetMapping("/showNewDonationForm")
+    public String showNewDonationForm(Model model) {
         // create model attribute to bind form data
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         return "new_employee";
     }
 
-    @GetMapping("/backtoEmployee")
-    public String backtoEmployee(Model model) {
+    @GetMapping("/backtoDonation")
+    public String backtoDonation(Model model) {
         // create model attribute to bind form data
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         return "redirect:/employee";
     }
 
-    @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    @PostMapping("/saveDonation")
+    public String saveDonation(@ModelAttribute("employee") Employee employee) {
         // save employee to database
         employeeService.saveEmployee(employee);
         return "redirect:/employee";
@@ -106,8 +106,8 @@ public class AppController {
         return "update_employee";
     }
 
-    @GetMapping("/deleteEmployee/{id}")
-    public String deleteEmployee(@PathVariable (value = "id") long id) {
+    @GetMapping("/deleteDonation/{id}")
+    public String deleteDonation(@PathVariable (value = "id") long id) {
 
         // call delete employee method
         this.employeeService.deleteEmployeeById(id);

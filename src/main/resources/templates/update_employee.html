@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Donation</title>
 </head>
 <body>
 
@@ -11,35 +11,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Employee Management System</title>
+    <title>Donation</title>
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-    <h1>Employee Management System</h1>
+    <h1>Donation</h1>
     <hr>
-    <h2>Update Employee</h2>
+    <h2>Update Donation</h2>
 
-    <form action="#" th:action="@{/saveEmployee}" th:object="${employee}"
+    <form action="#" th:action="@{/saveDonation}" th:object="${employee}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
 
-        <input type="text" th:field="*{firstName}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{eventId}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{lastName}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{donorId}" class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{item}" class="form-control mb-4 col-4">
 
-        <button type="submit" class="btn btn-info col-2"> Update Employee</button>
+        <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Update Donation</button>
     </form>
 
     <hr>
 
-    <a th:href = "@{/backtoEmployee}"> Back to Employee List</a>
+    <a th:href = "@{/backtoDonation}"> Back to Donation List</a>
 </div>
 </body>
 </html>
