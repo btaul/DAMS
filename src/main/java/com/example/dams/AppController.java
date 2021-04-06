@@ -78,12 +78,22 @@ public class AppController {
         return "new_employee";
     }
 
+    @GetMapping("/backtoEmployee")
+    public String backtoEmployee(Model model) {
+        // create model attribute to bind form data
+        Employee employee = new Employee();
+        model.addAttribute("employee", employee);
+        return "redirect:/employee";
+    }
+
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         // save employee to database
         employeeService.saveEmployee(employee);
         return "redirect:/employee";
     }
+
+
 
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
@@ -103,6 +113,7 @@ public class AppController {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/employee";
     }
+
 
 
     @GetMapping("/page/{pageNo}")
