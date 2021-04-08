@@ -20,16 +20,13 @@ public class EventService {
         RowMapper<Event> rm = new RowMapper<Event>() {
             @Override
             public Event mapRow(ResultSet resultSet, int i) throws SQLException {
-                Event event = new Event(resultSet.getLong("event"),
-                        resultSet.getString("requester"),
+                Event event = new Event(resultSet.getLong("id"),
                         resultSet.getString("status"),
-                        resultSet.getString("item"),
-                        resultSet.getInt("volume"),
-                        resultSet.getInt("remaining"),
                         resultSet.getInt("zip"),
                         resultSet.getString("address"),
                         resultSet.getString("start"),
-                        resultSet.getString("end"));
+                        resultSet.getString("end"),
+                        resultSet.getString("event"));
                 return event;
             }
         };
