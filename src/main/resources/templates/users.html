@@ -20,6 +20,10 @@
             <input type="submit" value="Request Items">
         </form>
     </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/donation}" > Donate an Item</a>
+    </div>
+
     <div>
         <h1>List of All Users</h1>
         <h3><a th:href="@{/list_events}">List All Events</a></h3>

@@ -94,6 +94,18 @@ public class AppController {
         return "request_success";
     }
 
+    @GetMapping("/donate_items")
+    public String donorRequest(Model model){
+
+        List<Event> listEvents = eRepo.findAll();
+        model.addAttribute("listEvents", listEvents);
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+
+        return "donation";
+    }
+
+
     /*@GetMapping("/list_events")
     public String viewEventsList(Model model){
         List<Event> eventList = eRepo.findAll();
