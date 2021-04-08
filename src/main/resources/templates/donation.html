@@ -41,7 +41,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="donation : ${listDonations}">
+
+        <tr th:each="donation : ${listDonations}" >
             <td th:text="${donation.donorId}"></td>
             <td th:text="${donation.item}"></td>
             <td th:text="${donation.donationVolume}"></td>

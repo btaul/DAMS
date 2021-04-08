@@ -148,6 +148,8 @@ public class AppController {
     @PostMapping("/saveDonation")
     public String saveDonation(@ModelAttribute("donation") Donation donation) {
         // save donation to database
+        User loggedInUser = getLoggedInUser();
+        donation.setDonorId(loggedInUser.getUsername());
         donationService.saveDonation(donation);
         return "redirect:/donation";
     }
