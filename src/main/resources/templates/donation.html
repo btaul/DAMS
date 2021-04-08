@@ -20,10 +20,7 @@
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
-            <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=eventId&sortDir=' + ${reverseSortDir}}">
-                    Donation event Id</a>
-            </th>
+
             <th>
                 <a th:href="@{'/page/' + ${currentPage} + '?sortField=donorId&sortDir=' + ${reverseSortDir}}">
                     Donation donor Id</a>
@@ -36,15 +33,19 @@
                 <a th:href="@{'/page/' + ${currentPage} + '?sortField=donationVolume&sortDir=' + ${reverseSortDir}}">
                     Donation donationVolume</a>
             </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=zip&sortDir=' + ${reverseSortDir}}">
+                    zip</a>
+            </th>
             <th> Actions </th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="donation : ${listDonations}">
-            <td th:text="${donation.eventId}"></td>
             <td th:text="${donation.donorId}"></td>
             <td th:text="${donation.item}"></td>
             <td th:text="${donation.donationVolume}"></td>
+            <td th:text="${donation.zip}"></td>
             <td> <a th:href="@{/showFormForUpdate/{id}(id=${donation.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/deleteDonation/{id}(id=${donation.id})}" class="btn btn-danger">Delete</a>
             </td>

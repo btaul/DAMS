@@ -114,7 +114,7 @@ public class AppController {
     // display list of donations
     @GetMapping("/donation")
     public String viewHomePage(Model model) {
-        return findPaginated(1, "eventId", "asc", model);
+        return findPaginated(1, "donorId", "asc", model);
     }
 
     @GetMapping("/showNewDonationForm")

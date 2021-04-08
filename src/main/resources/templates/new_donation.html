@@ -16,8 +16,7 @@
 
     <form action="#" th:action="@{/saveDonation}" th:object="${donation}"
           method="POST">
-        <input type="text" th:field="*{eventId}"
-               placeholder="eventId" class="form-control mb-4 col-4">
+
 
         <input type="text" th:field="*{donorId}"
                placeholder="donorId" class="form-control mb-4 col-4">
@@ -27,6 +26,9 @@
 
         <input type="text" th:field="*{donationVolume}"
                placeholder="donationVolume" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{zip}"
+               placeholder="zip" class="form-control mb-4 col-4">
 
         <button type="submit" class="btn btn-info col-2"> Save Donation</button>
     </form>

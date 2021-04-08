@@ -15,8 +15,8 @@ public class Donation {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "eventId")
-    private String eventId;
+    @Column(name = "zip")
+    private String zip;
 
     @Column(name = "donorId")
     private String donorId;
@@ -35,11 +35,11 @@ public class Donation {
     public void setId(long id) {
         this.id = id;
     }
-    public String getEventId() {
-        return eventId;
+    public String getZip() {
+        return zip;
     }
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
     public String getDonorId() {
         return donorId;
