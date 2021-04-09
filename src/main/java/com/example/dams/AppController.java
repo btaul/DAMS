@@ -141,8 +141,6 @@ public class AppController {
         List<Event> listEvents = eRepo.findAll();
         model.addAttribute("listEvents", listEvents);
 
-        List<Requests> listRequests = rRepo.findAll();
-        model.addAttribute("requester",listRequests);
         return "new_response";
     }
 
@@ -176,9 +174,10 @@ public class AppController {
     }
 
     @PostMapping("/continueResponse")
-    public String continueResponse(@ModelAttribute("donation") Donation donation) {
+    public String continueResponse(@ModelAttribute("donation") Donation donation, Model model) {
         // save donation to database
-
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "/new_response1";
     }
 
