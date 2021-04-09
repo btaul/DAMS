@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="requests: ${requester}" th:if="${donation.getEventId() == requests.getEventsID()}"}>
+            <tr th:each="requests: ${requester}" th:if="${donation.getEventId() == requests.getEventsID()}">
                 <td th:text="${requests.getRequestsID()}">RequestID</td>
                 <td th:text="${requests.getEventsID()}">EventsID</td>
                 <td th:text="${requests.getItem()}">Item</td>
@@ -48,8 +48,12 @@
 
         <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
 
-        <input type="text" th:field="*{item}"
-               placeholder="Item" class="form-control mb-4 col-4">
+
+        <select th:field="*{item}">
+            <option th:each="requests: ${requester}"  th:if="${donation.getEventId() == requests.getEventsID()}"
+                    th:value="${requests.getItem()}" th:text="${requests.getItem()}">
+            </option>
+        </select>
 
         <input type="text" th:field="*{donationVolume}"
                placeholder="donationVolume" class="form-control mb-4 col-4">

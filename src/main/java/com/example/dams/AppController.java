@@ -100,6 +100,9 @@ public class AppController {
         model.addAttribute("listEvents", listEvents);
         User loggedInUser = getLoggedInUser();
         model.addAttribute("user", loggedInUser);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
+
 
         return "donation";
     }
@@ -170,6 +173,18 @@ public class AppController {
         donation.setDonorId(loggedInUser.getUsername());
         donation.setPledge("N");
         donationService.saveDonation(donation);
+
+        List<Requests> listRequests = rRepo.findAll();
+        for(int i=0; i < listRequests.size(); i++){
+            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
+                    listRequests.get(i).getItem().equals(donation.getItem())){
+                Integer remain = listRequests.get(i).getRemaining();
+                Integer donated = Integer.parseInt(donation.getDonationVolume());
+                listRequests.get(i).setRemaining(remain - donated);
+                rRepo.save(listRequests.get(i));
+            }
+        }
+
         return "redirect:/donation";
     }
 
