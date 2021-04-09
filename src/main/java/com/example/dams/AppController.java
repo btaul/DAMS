@@ -153,21 +153,25 @@ public class AppController {
         // create model attribute to bind form data
         Donation donation = new Donation();
         model.addAttribute("donation", donation);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "redirect:/donation";
     }
 
     @PostMapping("/savePledge")
-    public String saveDonation(@ModelAttribute("donation") Donation donation) {
+    public String saveDonation(@ModelAttribute("donation") Donation donation, Model model) {
         // save donation to database
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
         donation.setEventId("Wait to be matched");
         donation.setPledge("Y");
         donationService.saveDonation(donation);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "redirect:/donation";
     }
     @PostMapping("/saveResponse")
-    public String saveResponse(@ModelAttribute("donation") Donation donation) {
+    public String saveResponse(@ModelAttribute("donation") Donation donation, Model model) {
         // save donation to database
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
@@ -178,12 +182,13 @@ public class AppController {
         for(int i=0; i < listRequests.size(); i++){
             if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
                     listRequests.get(i).getItem().equals(donation.getItem())){
-                Integer remain = listRequests.get(i).getRemaining();
+                Integer volume = listRequests.get(i).getVolume();
                 Integer donated = Integer.parseInt(donation.getDonationVolume());
-                listRequests.get(i).setRemaining(remain - donated);
+                listRequests.get(i).setRemaining(volume - donated);
                 rRepo.save(listRequests.get(i));
             }
         }
+        model.addAttribute("requester",listRequests);
 
         return "redirect:/donation";
     }
@@ -202,11 +207,13 @@ public class AppController {
 
 
     @PostMapping("/saveUpdate")
-    public String saveUpdate(@ModelAttribute("donation") Donation donation) {
+    public String saveUpdate(@ModelAttribute("donation") Donation donation, Model model) {
         // save donation to database
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
         donationService.saveDonation(donation);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "redirect:/donation";
     }
 
@@ -226,10 +233,12 @@ public class AppController {
     }
 
     @GetMapping("/deleteDonation/{id}")
-    public String deleteDonation(@PathVariable (value = "id") long id) {
+    public String deleteDonation(@PathVariable (value = "id") long id, Model model) {
 
         // call delete donation method
         this.donationService.deleteDonationById(id);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "redirect:/donation";
     }
 
@@ -257,6 +266,8 @@ public class AppController {
 
         User loggedInUser = getLoggedInUser();
         model.addAttribute("user", loggedInUser);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "donation";
     }
 
