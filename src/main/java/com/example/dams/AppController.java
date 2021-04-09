@@ -106,14 +106,6 @@ public class AppController {
     }
 
 
-    /*@GetMapping("/list_events")
-    public String viewEventsList(Model model){
-        List<Event> eventList = eRepo.findAll();
-        model.addAttribute("listEvents", eventList);
-        return "events";
-    }*/
-
-//    @RequestMapping(value = "/list_events", method = RequestMethod.GET)
     @GetMapping("/list_events")
     public String viewEventsList(Model model){
         List<Event> listEvents = eRepo.findAll();
@@ -125,7 +117,8 @@ public class AppController {
 
     // display list of donations
     @GetMapping("/donation")
-    public String viewHomePage(Model model) {
+    public String viewDonationPage(Model model) {
+
         return findPaginated(1, "donorId", "asc", model);
     }
 
@@ -196,6 +189,9 @@ public class AppController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listDonations", listDonations);
+
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
         return "donation";
     }
 
