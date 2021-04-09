@@ -51,10 +51,10 @@
         <a th:href = "@{/login}"> Already have an account? Sign in here!</a>
     </div>
     <div th:if="${user.getRole() == 'donor'}">
-        <a th:href = "@{/showNewDonationForm}" > If you have already register, Make a Donation to response to the request above</a>
+        <a th:href = "@{/responseToRequest}" >Make a Response</a>
     </div>
     <div th:if="${user.getRole() == 'donor'}">
-        <a th:href = "@{/responseToRequest}" > If no requested items matched your donation right now, you can Make a Pledge Donation</a>
+        <a th:href = "@{/showNewDonationForm}" >Make a Pledge</a>
     </div>
 
 </div>

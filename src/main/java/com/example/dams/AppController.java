@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Controller
@@ -130,7 +129,7 @@ public class AppController {
         Donation donation = new Donation();
         donation.setPledge("Y");
         model.addAttribute("donation", donation);
-        return "new_donation";
+        return "new_pledge";
     }
 
     @GetMapping("/responseToRequest")
@@ -139,7 +138,12 @@ public class AppController {
         Donation donation = new Donation();
         donation.setPledge("N");
         model.addAttribute("donation", donation);
-        return "new_donation";
+        List<Event> listEvents = eRepo.findAll();
+        model.addAttribute("listEvents", listEvents);
+
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
+        return "new_response";
     }
 
 
@@ -161,6 +165,27 @@ public class AppController {
         donationService.saveDonation(donation);
         return "redirect:/donation";
     }
+    @PostMapping("/saveResponse")
+    public String saveResponse(@ModelAttribute("donation") Donation donation) {
+        // save donation to database
+        User loggedInUser = getLoggedInUser();
+        donation.setDonorId(loggedInUser.getUsername());
+        donation.setPledge("N");
+        donationService.saveDonation(donation);
+        return "redirect:/donation";
+    }
+
+    @PostMapping("/continueResponse")
+    public String continueResponse(@ModelAttribute("donation") Donation donation) {
+        // save donation to database
+
+        return "/new_response1";
+    }
+
+
+
+
+
 
     @PostMapping("/saveUpdate")
     public String saveUpdate(@ModelAttribute("donation") Donation donation) {
