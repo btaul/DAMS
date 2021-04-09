@@ -110,6 +110,8 @@ public class AppController {
     public String viewEventsList(Model model){
         List<Event> listEvents = eRepo.findAll();
         model.addAttribute("listEvents", listEvents);
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser!=null) model.addAttribute("user", loggedInUser);
         return "events";
     }
 
