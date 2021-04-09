@@ -27,6 +27,12 @@ public class Donation {
     @Column(name = "donationVolume")
     private String donationVolume;
 
+    @Column(name = "eventId")
+    private String eventId;
+
+    @Column(name = "pledge")
+    private String pledge;
+
 
 
     public long getId() {
@@ -61,6 +67,18 @@ public class Donation {
         this.donationVolume = donationVolume;
     }
 
+    public String getEventId() {
+        return eventId;
+    }
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 
+    public String getPledge() {
+        return pledge;
+    }
+    public void setPledge(String pledge) {
+        this.pledge = pledge;
+    }
 
 }

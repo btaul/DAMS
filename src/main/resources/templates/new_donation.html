@@ -14,11 +14,11 @@
     <hr>
     <h2>Save Donation</h2>
 
-    <form action="#" th:action="@{/saveDonation}" th:object="${donation}"
+    <form action="#" th:action="@{/savePledge}" th:object="${donation}"
           method="POST">
 
-
-
+<!--        <input type="text" th:field="*{eventId}" th:if="${donation.getPledge =='N' }"-->
+<!--               placeholder="eventId" class="form-control mb-4 col-4">-->
 
         <input type="text" th:field="*{item}"
                placeholder="Item" class="form-control mb-4 col-4">

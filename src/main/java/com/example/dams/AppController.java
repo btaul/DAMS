@@ -128,9 +128,20 @@ public class AppController {
     public String showNewDonationForm(Model model) {
         // create model attribute to bind form data
         Donation donation = new Donation();
+        donation.setPledge("Y");
         model.addAttribute("donation", donation);
         return "new_donation";
     }
+
+    @GetMapping("/responseToRequest")
+    public String responseToRequest(Model model) {
+        // create model attribute to bind form data
+        Donation donation = new Donation();
+        donation.setPledge("N");
+        model.addAttribute("donation", donation);
+        return "new_donation";
+    }
+
 
     @GetMapping("/backtoDonation")
     public String backtoDonation(Model model) {
@@ -140,14 +151,27 @@ public class AppController {
         return "redirect:/donation";
     }
 
-    @PostMapping("/saveDonation")
+    @PostMapping("/savePledge")
     public String saveDonation(@ModelAttribute("donation") Donation donation) {
+        // save donation to database
+        User loggedInUser = getLoggedInUser();
+        donation.setDonorId(loggedInUser.getUsername());
+        donation.setEventId("Wait to be matched");
+        donation.setPledge("Y");
+        donationService.saveDonation(donation);
+        return "redirect:/donation";
+    }
+
+    @PostMapping("/saveUpdate")
+    public String saveUpdate(@ModelAttribute("donation") Donation donation) {
         // save donation to database
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
         donationService.saveDonation(donation);
         return "redirect:/donation";
     }
+
+
 
 
 

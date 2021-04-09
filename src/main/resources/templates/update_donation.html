@@ -22,7 +22,7 @@
     <hr>
     <h2>Update Donation</h2>
 
-    <form action="#" th:action="@{/saveDonation}" th:object="${donation}"
+    <form action="#" th:action="@{/saveUpdate}" th:object="${donation}"
           method="POST">
 
         <!-- Add hidden form field to handle update -->
@@ -35,6 +35,9 @@
         <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4">
 
         <input type="text" th:field="*{zip}" class="form-control mb-4 col-4">
+
+        <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
+        <input type="hidden" th:field="*{pledge}" th:value="${donation.pledge}" />
 
         <button type="submit" class="btn btn-info col-2"> Update Donation</button>
     </form>
