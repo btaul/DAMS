@@ -21,13 +21,13 @@
 <!--               placeholder="eventId" class="form-control mb-4 col-4">-->
 
         <input type="text" th:field="*{item}"
-               placeholder="Item" class="form-control mb-4 col-4">
+               placeholder="Item" class="form-control mb-4 col-4" required>
 
         <input type="text" th:field="*{donationVolume}"
-               placeholder="donationVolume" class="form-control mb-4 col-4">
+               placeholder="donationVolume" class="form-control mb-4 col-4" required>
 
         <input type="text" th:field="*{zip}"
-               placeholder="zip" class="form-control mb-4 col-4">
+               placeholder="zip" class="form-control mb-4 col-4" required>
 
         <button type="submit" class="btn btn-info col-2"> Save Donation</button>
     </form>

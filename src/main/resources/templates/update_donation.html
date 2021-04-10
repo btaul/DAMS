@@ -65,11 +65,11 @@
 
 
 
-        <input type="text" th:field="*{item}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{item}" class="form-control mb-4 col-4" required>
 
-        <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4" required>
 
-        <input type="text" th:field="*{zip}" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{zip}" class="form-control mb-4 col-4" required>
 
         <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
         <input type="hidden" th:field="*{pledge}" th:value="${donation.pledge}" />
