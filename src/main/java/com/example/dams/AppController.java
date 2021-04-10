@@ -216,7 +216,7 @@ public class AppController {
         for (int i = 0; i < listRequests.size(); i++) {
             if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
                     listRequests.get(i).getItem().equals(donation.getItem())) {
-                Integer volume = listRequests.get(i).getVolume();
+                Integer volume = listRequests.get(i).getRemaining();
                 Integer donated = donation.getDonationVolume();
                 if(volume > donated) listRequests.get(i).setRemaining(volume - donated);
                 else listRequests.get(i).setRemaining(0);
@@ -235,7 +235,20 @@ public class AppController {
         // set donation as a model attribute to pre-populate the form
         model.addAttribute("donation", donation);
         List<Requests> listRequests = rRepo.findAll();
+
+        //before update, recover the previous remainVolume in Request table
+        for (int i = 0; i < listRequests.size(); i++) {
+
+            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
+                    listRequests.get(i).getItem().equals(donation.getItem())) {
+                    Integer remain = listRequests.get(i).getRemaining();
+                    Integer prevDonateVolume = donation.getDonationVolume();
+                    listRequests.get(i).setRemaining(remain+prevDonateVolume);
+                    rRepo.save(listRequests.get(i));
+            }
+        }
         model.addAttribute("requester",listRequests);
+
         return "update_donation";
     }
 
