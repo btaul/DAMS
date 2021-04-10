@@ -41,25 +41,25 @@
     <hr>
     <h2>Save Donation</h2>
 
-    <form action="#" th:action="@{/continueResponse2}" th:object="${donation}"
+    <form action="#" th:action="@{/saveResponse}" th:object="${donation}"
           method="POST">
 
 
 
         <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
+        <input type="hidden" th:field="*{item}" th:value="${donation.item}" />
 
+<!--        <select th:field="*{item}">-->
+<!--            <option th:each="requests: ${requester}"  th:if="${donation.getEventId() == requests.getEventsID()}"-->
+<!--                    th:value="${requests.getItem()}" th:text="${requests.getItem()}">-->
+<!--            </option>-->
+<!--        </select>-->
 
-        <select th:field="*{item}">
-            <option th:each="requests: ${requester}"  th:if="${donation.getEventId() == requests.getEventsID()}"
-                    th:value="${requests.getItem()}" th:text="${requests.getItem()}">
-            </option>
-        </select>
+        <input type="number" th:field="*{donationVolume}" min="0" th:max = "${req.getRemaining()}"
+               placeholder="donationVolume" class="form-control mb-4 col-4" required>
 
-<!--        <input type="number" th:field="*{donationVolume}" min="0"-->
-<!--               placeholder="donationVolume" class="form-control mb-4 col-4" required>-->
-
-<!--        <input type="number" th:field="*{zip}" min = "0" max = "99999"-->
-<!--               placeholder="zip" class="form-control mb-4 col-4" required>-->
+        <input type="number" th:field="*{zip}" min = "0" max = "99999"
+               placeholder="zip" class="form-control mb-4 col-4" required>
 
         <button type="submit" class="btn btn-info col-2"> Save Donation</button>
     </form>

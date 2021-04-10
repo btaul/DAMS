@@ -191,6 +191,16 @@ public class AppController {
         List<Requests> listRequests = rRepo.findAll();
         model.addAttribute("requester",listRequests);
 
+
+        return "/new_response1";
+    }
+
+    @PostMapping("/continueResponse2")
+    public String continueResponse2(@ModelAttribute("donation") Donation donation, Model model) {
+        // save donation to database
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
+
         for (int i = 0; i < listRequests.size(); i++) {
             if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
                     listRequests.get(i).getItem().equals(donation.getItem())) {
@@ -198,7 +208,7 @@ public class AppController {
             }
         }
 
-        return "/new_response1";
+        return "/new_response2";
     }
 
 
