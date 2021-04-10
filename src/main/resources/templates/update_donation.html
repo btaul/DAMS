@@ -65,11 +65,11 @@
 
 
 
-        <input type="hidden" th:field="*{item}" th:value="${donation.eventId}" />
+        <input type="hidden" th:field="*{item}" th:value="${donation.item}" />
 
-        <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4" required>
+        <input type="number" th:field="*{donationVolume}" min = "0" th:max = "${req.getRemaining()}" class="form-control mb-4 col-4" required>
 
-        <input type="text" th:field="*{zip}" class="form-control mb-4 col-4" required>
+        <input type="number" th:field="*{zip}" min = "0" max = "99999" class="form-control mb-4 col-4" required >
 
         <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
         <input type="hidden" th:field="*{pledge}" th:value="${donation.pledge}" />

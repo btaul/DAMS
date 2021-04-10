@@ -257,6 +257,14 @@ public class AppController {
         //before update, recover the previous remainVolume in Request table
         returnRemainingToRequestTable(model, listRequests, donation);
 
+
+        for (int i = 0; i < listRequests.size(); i++) {
+            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
+                    listRequests.get(i).getItem().equals(donation.getItem())) {
+                model.addAttribute("req",listRequests.get(i));
+            }
+        }
+
         return "update_donation";
     }
 
