@@ -65,7 +65,7 @@
 
 
 
-        <input type="text" th:field="*{item}" class="form-control mb-4 col-4" required>
+        <input type="hidden" th:field="*{item}" th:value="${donation.eventId}" />
 
         <input type="text" th:field="*{donationVolume}" class="form-control mb-4 col-4" required>
 
