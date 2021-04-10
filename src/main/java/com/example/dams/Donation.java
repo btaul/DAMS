@@ -16,7 +16,7 @@ public class Donation {
     private long id;
 
     @Column(name = "zip")
-    private String zip;
+    private Integer zip;
 
     @Column(name = "donorId")
     private String donorId;
@@ -41,10 +41,10 @@ public class Donation {
     public void setId(long id) {
         this.id = id;
     }
-    public String getZip() {
+    public Integer getZip() {
         return zip;
     }
-    public void setZip(String zip) {
+    public void setZip(Integer zip) {
         this.zip = zip;
     }
     public String getDonorId() {
