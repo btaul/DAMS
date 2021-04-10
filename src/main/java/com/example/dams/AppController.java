@@ -217,7 +217,7 @@ public class AppController {
             if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
                     listRequests.get(i).getItem().equals(donation.getItem())) {
                 Integer volume = listRequests.get(i).getVolume();
-                Integer donated = Integer.parseInt(donation.getDonationVolume());
+                Integer donated = donation.getDonationVolume();
                 if(volume > donated) listRequests.get(i).setRemaining(volume - donated);
                 else listRequests.get(i).setRemaining(0);
                 rRepo.save(listRequests.get(i));

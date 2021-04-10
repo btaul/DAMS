@@ -25,7 +25,7 @@ public class Donation {
     private String item;
 
     @Column(name = "donationVolume")
-    private String donationVolume;
+    private Integer donationVolume;
 
     @Column(name = "eventId")
     private String eventId;
@@ -60,10 +60,10 @@ public class Donation {
         this.item = item;
     }
 
-    public String getDonationVolume() {
+    public Integer getDonationVolume() {
         return donationVolume;
     }
-    public void setDonationVolume(String donationVolume) {
+    public void setDonationVolume(Integer donationVolume) {
         this.donationVolume = donationVolume;
     }
 
