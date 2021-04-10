@@ -179,15 +179,7 @@ public class AppController {
         donationService.saveDonation(donation);
 
         List<Requests> listRequests = rRepo.findAll();
-        for(int i=0; i < listRequests.size(); i++){
-            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
-                    listRequests.get(i).getItem().equals(donation.getItem())){
-                Integer volume = listRequests.get(i).getVolume();
-                Integer donated = Integer.parseInt(donation.getDonationVolume());
-                listRequests.get(i).setRemaining(volume - donated);
-                rRepo.save(listRequests.get(i));
-            }
-        }
+        saveDonationToRequest(donation, listRequests);
         model.addAttribute("requester",listRequests);
 
         return "redirect:/donation";
@@ -213,12 +205,25 @@ public class AppController {
         donation.setDonorId(loggedInUser.getUsername());
         donationService.saveDonation(donation);
         List<Requests> listRequests = rRepo.findAll();
+        if(donation.getPledge().equals("N")) {
+            saveDonationToRequest(donation, listRequests);
+        }
         model.addAttribute("requester",listRequests);
         return "redirect:/donation";
     }
 
-
-
+    private void saveDonationToRequest(@ModelAttribute("donation") Donation donation, List<Requests> listRequests) {
+        for (int i = 0; i < listRequests.size(); i++) {
+            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
+                    listRequests.get(i).getItem().equals(donation.getItem())) {
+                Integer volume = listRequests.get(i).getVolume();
+                Integer donated = Integer.parseInt(donation.getDonationVolume());
+                if(volume > donated) listRequests.get(i).setRemaining(volume - donated);
+                else listRequests.get(i).setRemaining(0);
+                rRepo.save(listRequests.get(i));
+            }
+        }
+    }
 
 
     @GetMapping("/showFormForUpdate/{id}")
@@ -229,6 +234,8 @@ public class AppController {
 
         // set donation as a model attribute to pre-populate the form
         model.addAttribute("donation", donation);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("requester",listRequests);
         return "update_donation";
     }
 
