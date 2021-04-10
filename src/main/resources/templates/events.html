@@ -10,11 +10,14 @@
     <div>
         <form th:action="@{logout}" method="post"  th:if="${user.getRole() != null}">
             <input type="submit" value="Sign Out">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+            </p>
         </form>
     </div>
     <div>
         <h1>List of All Events</h1>
-        <div th:if="${user.getRole() != null}">
+        <div th:if="${user.getRole() == 'recipient'}">
             <h3><a th:href="@{/list_users}">Request Items for an Event</a></h3>
         </div>
     </div>

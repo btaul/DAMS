@@ -61,7 +61,7 @@
           method="POST">
 
         <!-- Add hidden form field to handle update -->
-        <input type="text" th:if="${donation.pledge.equals('Y')}"
+        <input type="text" th:if="${donation.pledge.equals('Y')}" maxlength = "30"
                th:field="*{item}" th:value="${donation.item}" />
 
         <input type="hidden" th:if="${donation.pledge.equals('N')}"

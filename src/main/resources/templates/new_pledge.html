@@ -20,7 +20,7 @@
 <!--        <input type="text" th:field="*{eventId}" th:if="${donation.getPledge =='N' }"-->
 <!--               placeholder="eventId" class="form-control mb-4 col-4">-->
 
-        <input type="text" th:field="*{item}"
+        <input type="text" th:field="*{item}" maxlength = "30"
                placeholder="Item" class="form-control mb-4 col-4" required>
 
         <input type="number" th:field="*{donationVolume}" min= "0" max = "999"
