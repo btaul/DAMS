@@ -61,13 +61,21 @@
           method="POST">
 
         <!-- Add hidden form field to handle update -->
-        <input type="hidden" th:field="*{id}" />
+        <input type="text" th:if="${donation.pledge.equals('Y')}"
+               th:field="*{item}" th:value="${donation.item}" />
+
+        <input type="hidden" th:if="${donation.pledge.equals('N')}"
+               th:field="*{item}" class="form-control mb-4 col-4" required>
 
 
 
-        <input type="hidden" th:field="*{item}" th:value="${donation.item}" />
+        <input type="hidden" th:field="*{id}" th:value="${donation.id}" />
 
-        <input type="number" th:field="*{donationVolume}" min = "0" th:max = "${req.getRemaining()}" class="form-control mb-4 col-4" required>
+        <input type="number" th:field="*{donationVolume}" min = "0" max = "999"
+               th:if="${donation.pledge.equals('Y')}" class="form-control mb-4 col-4" required>
+
+        <input type="number" th:field="*{donationVolume}" min = "0" th:max = "${req.getRemaining()}"
+               th:if="${donation.pledge.equals('N')}" class="form-control mb-4 col-4" required>
 
         <input type="number" th:field="*{zip}" min = "0" max = "99999" class="form-control mb-4 col-4" required >
 
