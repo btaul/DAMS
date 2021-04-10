@@ -237,17 +237,7 @@ public class AppController {
         List<Requests> listRequests = rRepo.findAll();
 
         //before update, recover the previous remainVolume in Request table
-        for (int i = 0; i < listRequests.size(); i++) {
-
-            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
-                    listRequests.get(i).getItem().equals(donation.getItem())) {
-                    Integer remain = listRequests.get(i).getRemaining();
-                    Integer prevDonateVolume = donation.getDonationVolume();
-                    listRequests.get(i).setRemaining(remain+prevDonateVolume);
-                    rRepo.save(listRequests.get(i));
-            }
-        }
-        model.addAttribute("requester",listRequests);
+        returnRemainingToRequestTable(model, listRequests, donation);
 
         return "update_donation";
     }
@@ -256,12 +246,39 @@ public class AppController {
     public String deleteDonation(@PathVariable (value = "id") long id, Model model) {
 
         // call delete donation method
-        this.donationService.deleteDonationById(id);
         List<Requests> listRequests = rRepo.findAll();
-        model.addAttribute("requester",listRequests);
+
+
+        // get donation from the service
+        Donation donation = donationService.getDonationById(id);
+
+        // set donation as a model attribute to pre-populate the form
+//        model.addAttribute("donation", donation);
+
+
+        //return the previous donationVolume
+        returnRemainingToRequestTable(model, listRequests, donation);
+
+
+        this.donationService.deleteDonationById(id);
+
         return "redirect:/donation";
     }
 
+    private void returnRemainingToRequestTable(Model model, List<Requests> listRequests, Donation donation) {
+        for (int i = 0; i < listRequests.size(); i++) {
+
+            if (listRequests.get(i).getEventsID().equals(donation.getEventId()) &&
+                    listRequests.get(i).getItem().equals(donation.getItem())) {
+                Integer remain = listRequests.get(i).getRemaining();
+                Integer prevDonateVolume = donation.getDonationVolume();
+                listRequests.get(i).setRemaining(remain+prevDonateVolume);
+                rRepo.save(listRequests.get(i));
+            }
+        }
+
+        model.addAttribute("requester",listRequests);
+    }
 
 
     @GetMapping("/page/{pageNo}")

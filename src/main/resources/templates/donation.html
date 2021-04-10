@@ -84,7 +84,12 @@
         </div>
     </div>
 
-
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/responseToRequest}" >Make a Response</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/showNewDonationForm}" >Make a Pledge</a>
+    </div>
 
     <a th:href = "@{/list_events}"> Back to Event List</a>
 </div>
