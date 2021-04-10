@@ -158,6 +158,11 @@ public class AppController {
         return "redirect:/donation";
     }
 
+    @GetMapping("/cancel")
+    public String cancel() {
+        return "index";
+    }
+
     @PostMapping("/savePledge")
     public String saveDonation(@ModelAttribute("donation") Donation donation, Model model) {
         // save donation to database
