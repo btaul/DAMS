@@ -24,7 +24,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="requests: ${requester}" th:if="${donation.getEventId() == requests.getEventsID()}">
+            <tr th:each="requests: ${requester}" th:if="${donation.getEventId() == requests.getEventsID() &&
+                    requests.getStatus() == 'active'}" >
                 <td th:text="${requests.getRequestsID()}">RequestID</td>
                 <td th:text="${requests.getEventsID()}">EventsID</td>
                 <td th:text="${requests.getItem()}">Item</td>

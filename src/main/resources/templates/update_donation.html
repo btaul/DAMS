@@ -37,7 +37,8 @@
             <tbody>
             <tr th:each="requests: ${requester}" th:if="${donation.getPledge().equals('N') &&
                     donation.getItem() == requests.getItem()  &&
-                    donation.getEventId() == requests.getEventsID()     }"
+                    donation.getEventId() == requests.getEventsID()   &&
+                    requests.getStatus() == 'active'}"
                 th:with="showRemain=*{requests.getRemaining() - donation.getDonationVolume()}" >
                 <td th:text="${requests.getRequestsID()}">RequestID</td>
                 <td th:text="${requests.getEventsID()}">EventsID</td>
