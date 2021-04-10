@@ -46,10 +46,10 @@ public class TestHomepage {
         driver.get(BaseUrl.BASE_URL);
 
         WebHomePage webHomePage = new WebHomePage(driver);
-        String listAllUsers = webHomePage.getListAllUsers();
-        assert listAllUsers.equals("List All Users");
-        webHomePage.clickListAllUsers();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/login");
+        String listAllUsers = webHomePage.getListAllEvents();
+        assert listAllUsers.equals("List All Events");
+        webHomePage.clickListAllEvents();
+        assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
     }
 
 

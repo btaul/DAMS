@@ -13,8 +13,8 @@ public class WebHomePage extends PageObject{
     @FindBy(linkText = "Register")
     private WebElement register;
 
-    @FindBy(linkText = "List All Users")
-    private WebElement listAllUsers;
+    @FindBy(linkText = "List All Events")
+    private WebElement listAllEvents;
 
 
     public WebHomePage(WebDriver driver) {
@@ -35,11 +35,11 @@ public class WebHomePage extends PageObject{
         this.register.click();
     }
 
-    public String getListAllUsers(){
-        return this.listAllUsers.getText();
+    public String getListAllEvents(){
+        return this.listAllEvents.getText();
     }
-    public void clickListAllUsers(){
-        this.listAllUsers.click();
+    public void clickListAllEvents(){
+        this.listAllEvents.click();
     }
 
 
