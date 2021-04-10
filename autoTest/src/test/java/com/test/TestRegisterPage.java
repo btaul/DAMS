@@ -24,51 +24,36 @@ public class TestRegisterPage {
 
     }
 
-    public static void navigateToLogin(){
+    public static void navigateToLogin(WebHomePage webHomePage){
         //Navigate from Homepage to Loginpage
         driver.get(BaseUrl.BASE_URL);
-        WebHomePage webHomePage = new WebHomePage(driver);
-
+//        WebHomePage webHomePage = new WebHomePage(driver);
         webHomePage.clickRegister();
     }
 
 
     @Test(testName = "Test Login Button")
     public static void testRegister() throws InterruptedException {
-        navigateToLogin();
+        WebHomePage webHomePage = new WebHomePage(driver);
+        navigateToLogin(webHomePage);
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        WebElement wb;
-        wb = driver.findElement(By.id("username"));
-        jse.executeScript("arguments[0].value='Wangjunnan@gmail1.com';", wb);
-        wb = driver.findElement(By.id("role"));
-        jse.executeScript("arguments[0].value='donor';", wb);
-        wb = driver.findElement(By.id("password"));
-        jse.executeScript("arguments[0].value='1234567';", wb);
-        wb = driver.findElement(By.id("question1"));
-        jse.executeScript("arguments[0].value='What is the brand of your first car?';", wb);
-        wb = driver.findElement(By.id("answer1"));
-        jse.executeScript("arguments[0].value='civic';", wb);
-        wb = driver.findElement(By.id("question2"));
-        jse.executeScript("arguments[0].value='What is your hometown?';", wb);
-        wb = driver.findElement(By.id("answer2"));
-        jse.executeScript("arguments[0].value='China';", wb);
-        wb = driver.findElement(By.cssSelector("body > div > form > div > div:nth-child(8) > button"));
-        jse.executeScript("arguments[0].click()", wb);
+        RegisterPage registerPage = new RegisterPage(driver);
+        registerPage.sendUsername("testReceipient1");
+        registerPage.sendRole();
+        registerPage.sendZipcode(52246);
+        registerPage.sendPassword("Abc123!");
+        registerPage.sendQuestion1("What is the brand of your first car?");
+        registerPage.sendAnswer1("civic");
+        registerPage.sendQuestion2("What is your hometown?");
+        registerPage.sendAnswer2("ZZ");
+        registerPage.clickSignUp();
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
-        //Thread.sleep(5000);
+
+//        Thread.sleep(3000);
 
     }
-
-
-
-
-
-
-
-
 
 
 
