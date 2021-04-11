@@ -23,6 +23,7 @@ public class TestLoginPage {
     @Test(testName = "Test Login Process")
     public static void testLogin() throws InterruptedException {
         LoginDriverSetUp.loginSetup(driver);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
 //        Thread.sleep(3000);
     }
 

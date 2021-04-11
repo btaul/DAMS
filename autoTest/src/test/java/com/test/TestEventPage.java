@@ -22,6 +22,7 @@ public class TestEventPage {
     @Test(testName = "Test requestItem Link")
     public static void testRequestItem() throws InterruptedException {
         RequestDriverSetUp.requestSetUp(driver);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
 //        Thread.sleep(3000);
 
     }
