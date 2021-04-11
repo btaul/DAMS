@@ -29,7 +29,7 @@
                 <tbody>
                 <tr th:each="event: ${listEvents}" th:if="${event.getZip() == user.getZipcode() && event.getStatus() == 'active'}" >
                     <td th:text="${event.id}">Event ID</td>
-                    <td th:text="${event.event}">Requester</td>
+                    <td th:text="${event.description}">Requester</td>
                     <td th:text="${event.zip}">Zip Code</td>
                     <td th:text="${event.address}">Address</td>
                     <td th:text="${event.start}">Start Date</td>
@@ -40,11 +40,13 @@
         </div>
         <div class="form-group row3">
             <div class="form-group row">
-                <label class="col-form-label col-4">EventID</label>
+                <label for="eventID" class="col-form-label col-4">Choose Event:</label>
                 <div class="">
-                    <label>
-                        <input type="text" th:field="*{eventsID}" class="form-control" required/>
-                    </label>
+                    <div class="">
+                        <select name="eventID" id="eventID" th:field="*{eventsID}" required>
+                            <option th:value="${event.id}" th:text="${event.id}" th:each="event: ${listEvents}"  th:if="${event.getZip() == user.getZipcode() && event.getStatus() == 'active'}"></option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -59,7 +61,7 @@
                 <label class="col-form-label col-4">Volume</label>
                 <div class="">
                     <label>
-                        <input type="text" class="form-control" th:field="*{volume}" required/>
+                        <input type="number" class="form-control" name="test_name" min="0" oninput="validity.valid||(value='');" th:field="*{volume}" required/>
                     </label>
                 </div>
             </div>

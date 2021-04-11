@@ -17,7 +17,10 @@
     </div>
     <div>
         <h1>List of All Events</h1>
-        <div th:if="${user.getRole() == 'recipient'}">
+        <h3><a th:href="@{/list_users}">List All Users</a></h3>
+        <h3><a th:href="@{/create}">Create Event</a></h3>
+<!--        <div th:if="${user.getRole() == 'recipient'}">-->
+        <div>
             <h3><a th:href="@{/list_users}">Request Items for an Event</a></h3>
         </div>
     </div>
@@ -32,20 +35,54 @@
                 <th>Address</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="event: ${listEvents}" >
+            <tr th:each="event: ${listEvents}">
                 <td th:text="${event.id}">Event ID</td>
-                <td th:text="${event.event}">Description</td>
+                <td th:text="${event.description}">Description</td>
                 <td th:text="${event.status}">Status</td>
                 <td th:text="${event.zip}">Zip Code</td>
                 <td th:text="${event.address}">Address</td>
                 <td th:text="${event.start}">Start Date</td>
                 <td th:text="${event.end}">End Date</td>
+                <td><form th:action="@{'/update/' + ${event.id}}" method="post">
+                    <div>
+                        <button type="submit" value="Update">Update</button>
+                    </div>
+                </form></td>
+                <td><form th:action="@{'/delete/' + ${event.id}}" method="post">
+                    <div>
+                        <button type="submit" value="Delete">Delete</button>
+                    </div>
+                </form></td>
             </tr>
             </tbody>
         </table>
+    </div>
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
     </div>
     <div th:if="${user.getRole() == null}">
         <a th:href = "@{/register}"> Register and Make a Donation NOW!</a>

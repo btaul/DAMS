@@ -2,6 +2,10 @@ package com.example.dams;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -21,7 +27,7 @@ public class AppController {
     private UserRepository repo;
 
     @Autowired
-    private EventService eRepo;
+    private EventRepository eRepo;
 
     @Autowired
     private DonationService donationService;
@@ -50,9 +56,15 @@ public class AppController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute("user") User user){
+    public String processRegistration(@ModelAttribute("user") User user, Model model){
+        User checkUserValid = repo.findByUsername(user.getUsername());
+        if(checkUserValid != null){
+            model.addAttribute("inUse", user.getUsername());
+            return "signup_form";
+        }
         ValidPassword2 uvp = new ValidPassword2();
-        if(uvp.hasErrors(user.getPassword())){
+        if(uvp.hasErrors(user.getPassword()) && user.getPassword() != null){
+            model.addAttribute("errors", uvp.getErrors());
             return "signup_form";
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -63,6 +75,20 @@ public class AppController {
         return "register_success";
     }
 
+    @GetMapping("/create")
+    public String showCreateEvent(Model model){
+        model.addAttribute("event", new Event());
+        return "create_event";
+    }
+
+    @PostMapping("/create")
+    public String createEvent(Event event){
+        event.setStatus("active");
+
+        eRepo.save(event);
+        return "event_created";
+    }
+
     @GetMapping("/list_users")
     public String viewUserList(Model model){
         List<Requests> listRequests = rRepo.findAll();
@@ -70,6 +96,17 @@ public class AppController {
         model.addAttribute("user", loggedInUser);
         model.addAttribute("requester",listRequests);
         return "users";
+    }
+
+    public User getLoggedInUser(){
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return repo.findByUsername(username);
     }
 
     @GetMapping("/request_items")
@@ -117,6 +154,31 @@ public class AppController {
         return "events";
     }
 
+//    @GetMapping("/delete/{id}")
+//    public String deleteEvent(Model model, @PathVariable(value = "id") String id){
+//        return "delete_confirm";
+//    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteEvent(@PathVariable(value = "id") Long id){
+        eRepo.dEvent(id);
+        return "delete_done";
+    }
+
+//    @GetMapping("/update/{id}")
+//    public String updateEvent(@PathVariable (value = "id") Long id, Model model){
+//        Event event = eRepo.findById(Long.toString(id));
+//        model.addAttribute("event", event);
+//        return "update_event";
+//    }
+
+    @PostMapping("/update/{id}")
+    public String updateEvent(@PathVariable (value = "id") Long id, Model model){
+//        Event event = eRepo.findById(Long.toString(id));
+        Optional<Event> optional = eRepo.findById(id);
+        Event event = null;
+        if (optional.isPresent()) {
+            event = optional.get();
 
 
     // display list of donations
@@ -359,9 +421,43 @@ public class AppController {
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
-            username = principal.toString();
+            throw new RuntimeException(" Event not found for id :: " + id);
         }
-        return repo.findByUsername(username);
+        model.addAttribute("event", event);
+        return "update_event";
+    }
+
+    @PostMapping("update")
+    public String eventUpdated(Event event) {
+        this.eRepo.save(event);
+        return "event_updated";
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        int pageSize = 5;
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<Event> page = this.eRepo.findAll(pageable);
+
+        List<Event> listEvents = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listEvents", listEvents);
+        return "events";
     }
 
 }
