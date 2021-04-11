@@ -48,8 +48,8 @@ public class RegisterPage extends PageObject{
         jse.executeScript(String.format("arguments[0].value='%s';", user), username);
     }
 
-    public void sendRole(){
-        jse.executeScript(String.format("arguments[0].value='%s';", "recipient"), role);
+    public void sendRole(String selectedRole){
+        jse.executeScript(String.format("arguments[0].value='%s';", selectedRole), role);
     }
 
     public void sendZipcode(Integer zip){

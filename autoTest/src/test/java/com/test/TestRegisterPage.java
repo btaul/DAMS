@@ -27,17 +27,14 @@ public class TestRegisterPage {
 
 
 
-    @Test(testName = "Test Register")
-    public static void testRegister() throws InterruptedException {
+    @Test(testName = "Test Register for a receipient")
+    public static void testRegisterReceipient() throws InterruptedException {
 
-        WebHomePage webHomePage = new WebHomePage(driver);
-        driver.get(BaseUrl.BASE_URL);
-        webHomePage.clickRegister();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/register");
+        HomePageDriverSetUp.registerButton(driver);
 
         RegisterPage registerPage = new RegisterPage(driver);
         registerPage.sendUsername("testReceipient1");
-        registerPage.sendRole();
+        registerPage.sendRole("recipient");
         registerPage.sendZipcode(52246);
         registerPage.sendPassword("Abc123!");
         registerPage.sendQuestion1("What is the brand of your first car?");
@@ -47,11 +44,31 @@ public class TestRegisterPage {
         registerPage.clickSignUp();
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
-
 //        Thread.sleep(3000);
 
     }
 
+    @Test(testName = "Test Register for a donor")
+    public static void testRegisterDonor() throws InterruptedException {
+
+        HomePageDriverSetUp.registerButton(driver);
+
+
+        RegisterPage registerPage = new RegisterPage(driver);
+        registerPage.sendUsername("testDonor1");
+        registerPage.sendRole("donor");
+        registerPage.sendZipcode(52246);
+        registerPage.sendPassword("Abc123!");
+        registerPage.sendQuestion1("What is your favorite vacation spot?");
+        registerPage.sendAnswer1("beach");
+        registerPage.sendQuestion2("What is the name of your first pet?");
+        registerPage.sendAnswer2("zhizhi");
+        registerPage.clickSignUp();
+        assert driver.getCurrentUrl().equals("http://localhost:8084/register");
+
+//        Thread.sleep(3000);
+
+    }
 
 
     @AfterSuite

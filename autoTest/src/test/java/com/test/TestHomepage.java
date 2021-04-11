@@ -21,34 +21,19 @@ public class TestHomepage {
 
     @Test(testName = "Test Login Button")
     public static void testLoginButton(){
-        driver.get(BaseUrl.BASE_URL);
-
-        WebHomePage webHomePage = new WebHomePage(driver);
-        String login = webHomePage.getLogin();
-        assert login.equals("Login");
-        webHomePage.clickLogin();
+        HomePageDriverSetUp.loginButton(driver);
         assert driver.getCurrentUrl().equals("http://localhost:8084/login");
     }
 
     @Test(testName = "Test Register Button")
     public static void testRegisterButton(){
-        driver.get(BaseUrl.BASE_URL);
-
-        WebHomePage webHomePage = new WebHomePage(driver);
-        String register = webHomePage.getRegister();
-        assert register.equals("Register");
-        webHomePage.clickRegister();
+        HomePageDriverSetUp.registerButton(driver);
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
     }
 
-    @Test(testName = "Test ListAllUsers Button")
+    @Test(testName = "Test ListAllEvents Button")
     public static void testListAllUsersButton(){
-        driver.get(BaseUrl.BASE_URL);
-
-        WebHomePage webHomePage = new WebHomePage(driver);
-        String listAllUsers = webHomePage.getListAllEvents();
-        assert listAllUsers.equals("List All Events");
-        webHomePage.clickListAllEvents();
+        HomePageDriverSetUp.listAllEventsButton(driver);
         assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
     }
 
