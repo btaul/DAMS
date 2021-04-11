@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Event Confirmation - DAMS</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post">
+            <input type="submit" value="Sign Out">
+        </form>
+    </div>
+    <form th:action="@{delete}" method="delete">
+        <div>
+            <button type="submit" value="Delete">Delete Event</button>
+        </div>
+    </form>
+
+    <h3><a th:href="@{/list_events}">Cancel</a></h3>
+</div>
