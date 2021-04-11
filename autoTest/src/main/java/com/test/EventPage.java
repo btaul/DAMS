@@ -13,7 +13,11 @@ public class EventPage extends PageObject{
     @FindBy(linkText = "Make a Pledge")
     private WebElement pledgeLink;
 
+    @FindBy(linkText = "Make a Response")
+    private WebElement responseLink;
 
+    @FindBy(linkText = "Go to your Donation")
+    private WebElement donationLink;
 
 
     public EventPage(WebDriver driver) {
@@ -30,7 +34,13 @@ public class EventPage extends PageObject{
         jse.executeScript("arguments[0].click()", pledgeLink);
     }
 
+    public void clickResponseLink(){
+        jse.executeScript("arguments[0].click()", responseLink);
+    }
 
+    public void clickDonationLink(){
+        jse.executeScript("arguments[0].click()", donationLink);
+    }
 
 
 }

@@ -19,21 +19,29 @@ public class TestEventPage4 {
         System.setProperty("webdriver.chrome.driver", BaseUrl.CHROME_DRIVER_LOCATION);
     }
 
-
-    @Test(testName = "Test requestItem Link")
-    public static void testRequestItemLink() throws InterruptedException {
-
+    public static void createAccountAndLogin(String username, String password, String role){
         HomePageDriverSetUp.registerButton(driver);
 
-        String username = "testRecipient1";
-        String password = "Abc123!";
 
-        UserProfileSetting.setupRegisterProfile(driver, username, "recipient", 52246,
+
+        UserProfileSetting.setupRegisterProfile(driver, username, role, 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
 
         LoginDriverSetUp.loginSetup(driver, username, password);
 
+    }
+
+
+
+    @Test(testName = "Test requestItem Link")
+    public static void testRequestItemLink() throws InterruptedException {
+
+
+        String username = "testRecipient1";
+        String password = "Abc123!";
+        String role = "recipient";
+        createAccountAndLogin(username, password, role);
         EventPageDriverSetUp.clickRequestLink(driver);
         assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
 //        Thread.sleep(3000);
@@ -41,17 +49,10 @@ public class TestEventPage4 {
 
     @Test(testName = "Test pledge link")
     public static void testPledgeLink() throws InterruptedException {
-
-        HomePageDriverSetUp.registerButton(driver);
-
         String username = "testDonor1";
         String password = "Abc123!";
-
-        UserProfileSetting.setupRegisterProfile(driver, username, "donor", 52246,
-                password, "What is your favorite vacation spot?","beach",
-                "What is the name of your first pet?", "pet");
-
-        LoginDriverSetUp.loginSetup(driver, username, password);
+        String role = "donor";
+        createAccountAndLogin(username, password, role);
 
         EventPageDriverSetUp.clickPledgeLink(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -59,6 +60,38 @@ public class TestEventPage4 {
         assert driver.getCurrentUrl().equals("http://localhost:8084/showNewDonationForm");
 //        Thread.sleep(3000);
     }
+
+    @Test(testName = "Test response link")
+    public static void testResponseLink() throws InterruptedException {
+
+
+        String username = "testDonor1";
+        String password = "Abc123!";
+        String role = "donor";
+        createAccountAndLogin(username, password, role);
+
+        EventPageDriverSetUp.clickResponseLink(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        Thread.sleep(3000);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/responseToRequest");
+//        Thread.sleep(3000);
+    }
+
+    @Test(testName = "Test donation link")
+    public static void testDonationLink() throws InterruptedException {
+
+        String username = "testDonor1";
+        String password = "Abc123!";
+        String role = "donor";
+        createAccountAndLogin(username, password, role);
+
+        EventPageDriverSetUp.clickDonationLink(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        Thread.sleep(3000);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/donation");
+//        Thread.sleep(3000);
+    }
+
 
 
 

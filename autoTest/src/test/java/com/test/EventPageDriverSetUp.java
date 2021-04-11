@@ -14,11 +14,18 @@ public class EventPageDriverSetUp {
 
 
     public static void clickPledgeLink(WebDriver driver){
-
         EventPage eventPage = new EventPage(driver);
         eventPage.clickPledgeLink();
-
     }
 
+    public static void clickResponseLink(WebDriver driver){
+        EventPage eventPage = new EventPage(driver);
+        eventPage.clickResponseLink();
+    }
+
+    public static void clickDonationLink(WebDriver driver){
+        EventPage eventPage = new EventPage(driver);
+        eventPage.clickDonationLink();
+    }
 
 }
