@@ -29,7 +29,7 @@
                 <tbody>
                 <tr th:each="event: ${listEvents}" th:if="${event.getZip() == user.getZipcode() && event.getStatus() == 'active'}" >
                     <td th:text="${event.id}">Event ID</td>
-                    <td th:text="${event.event}">Requester</td>
+                    <td th:text="${event.description}">Requester</td>
                     <td th:text="${event.zip}">Zip Code</td>
                     <td th:text="${event.address}">Address</td>
                     <td th:text="${event.start}">Start Date</td>

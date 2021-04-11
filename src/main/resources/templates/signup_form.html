@@ -68,6 +68,17 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="question1" class="col-form-label col-4">Choose Another Security Question:</label>
+                <div class="">
+                    <select name="question1" id="question1" th:field="*{question1}" required>
+                        <option value=""></option>
+                        <option value="What is the brand of your first car?">What is the brand of your first car?</option>
+                        <option value="What is your favorite vacation spot?">What is your favorite vacation spot?</option>
+                        <option value="What is your favorite color?">What is your favorite color?</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-form-label col-4">Answer to Security Question 1</label>
                 <div class="">
                     <label>

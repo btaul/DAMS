@@ -1,14 +1,16 @@
 package com.example.dams;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -75,7 +77,7 @@ public class AppController {
     @PostMapping("/create")
     public String createEvent(Event event){
         event.setStatus("active");
-        event.setRemaining(event.getVolume());
+
         eRepo.save(event);
         return "event_created";
     }
@@ -87,6 +89,17 @@ public class AppController {
         model.addAttribute("user", loggedInUser);
         model.addAttribute("requester",listRequests);
         return "users";
+    }
+
+    public User getLoggedInUser(){
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return repo.findByUsername(username);
     }
 
     @GetMapping("/request_items")

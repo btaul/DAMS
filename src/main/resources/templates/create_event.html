@@ -20,20 +20,12 @@
       th:object="${event}"
 >
     <div class="m-3">
-        <div class="form-group row">
-            <label class="col-form-label col-4">Item</label>
-            <div class="">
-                <label>
-                    <input type="text" class="form-control" th:field="*{item}" required/>
-                </label>
-            </div>
-        </div>
 
         <div class="form-group row">
-            <label class="col-form-label col-4">Volume</label>
+            <label class="col-form-label col-4">description</label>
             <div class="">
                 <label>
-                    <input type="text" class="form-control" th:field="*{volume}" required/>
+                    <input type="text" class="form-control" th:field="*{description}" required/>
                 </label>
             </div>
         </div>
@@ -42,7 +34,7 @@
             <label class="col-form-label col-4">Zip Code</label>
             <div class="">
                 <label>
-                    <input type="text" class="form-control" th:field="*{zip}" required/>
+                    <input type="number" class="form-control" th:field="*{zip}" required/>
                 </label>
             </div>
         </div>
