@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 
-public class TestMakePledge {
+public class TestMakePledge7 {
 
     private static final WebDriver driver = new ChromeDriver();
 
