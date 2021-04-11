@@ -67,7 +67,7 @@ public class TestCreateResponse_8 {
         createAccountAndLogin(usernameRecipient, passwordRecipient, roleRecipient);
 
         String eventsID = "1";
-        String item = "apple";
+        String item = "cucumber";
         Integer volume = 50;
         createRequest(driver, eventsID, item, volume);
 
@@ -89,15 +89,18 @@ public class TestCreateResponse_8 {
         createResponse2.clickSaveDonation();
         assert driver.getCurrentUrl().equals("http://localhost:8084/continueResponse2");
 
+        CreateResponse3 createResponse3 = new CreateResponse3(driver);
+        Integer donationVolume = 10;
+        Integer zipDonation = 52246;
+        createResponse3.sendDonationVolume(donationVolume);
+        createResponse3.sendZip(zipDonation);
+        createResponse3.clickSaveDonation();
 
-
-
-
-
+        assert driver.getCurrentUrl().equals("http://localhost:8084/donation");
 
 //      We should have a step to delete the request function later!
 
-        Thread.sleep(3000);
+//        Thread.sleep(3000);
 
     }
 
