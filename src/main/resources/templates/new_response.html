@@ -47,8 +47,9 @@
   <form action="#" th:action="@{/continueResponse}" th:object="${donation}"
         method="POST">
 
-    <select th:field="*{eventId}">
-      <option th:each="event: ${listEvents}"  th:value="${event.id}" th:text="${event.id}">
+    <select th:field="*{eventId}" required>
+      <option value= ""></option>
+      <option th:each="event: ${listEvents}"  th:value="${event.id}" th:text="${event.id}" >
       </option>
     </select>
 

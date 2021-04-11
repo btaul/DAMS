@@ -50,7 +50,8 @@
         <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
 
 
-        <select th:field="*{item}">
+        <select th:field="*{item}" required>
+            <option value= ""></option>
             <option th:each="requests: ${requester}"  th:if="${donation.getEventId() == requests.getEventsID()}"
                     th:value="${requests.getItem()}" th:text="${requests.getItem()}">
             </option>
