@@ -9,16 +9,11 @@ public class Event {
     private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    public Long event;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
 //    @GeneratedValue(generator = "system-uuid")
-    @Column(nullable = false, unique = true, length = 45)
-    public String event = Integer.toString(ID_GENERATOR.addAndGet(1)/4);
-//    @Id @GeneratedValue(generator="system-uuid")
-//    @GenericGenerator(name="system-uuid", strategy = "uuid")
-//    String event;
-//    @Column(nullable = false)
-//    String text;
+//    @Column(nullable = false, unique = true, length = 45)
+//    public String id = Integer.toString(ID_GENERATOR.addAndGet(1)/4);
 
     @Column(nullable = true, unique = true, length = 45)
     public String requester;
@@ -47,8 +42,8 @@ public class Event {
     @Column(nullable = true, length = 20)
     public String end;
 
-    public Event(String event, String requester, String status, String item, Integer volume, Integer remaining, Integer zip, String address, String start, String end) {
-        this.event = event;
+    public Event(Long id, String requester, String status, String item, Integer volume, Integer remaining, Integer zip, String address, String start, String end) {
+        this.id = id;
         this.requester = requester;
         this.status = status;
         this.item = item;
@@ -73,12 +68,20 @@ public class Event {
 //        this.end = "end";
     }
 
-    public String getEvent() {
-        return event;
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
+
+    public Long getId(){
+        return id;
     }
 
-    public void setEvent(String id) {
-        this.event = id;
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getRequester() {

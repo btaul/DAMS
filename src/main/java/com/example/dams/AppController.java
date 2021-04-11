@@ -1,12 +1,17 @@
 package com.example.dams;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -48,8 +53,6 @@ public class AppController {
     public String createEvent(Event event){
         event.setStatus("active");
         event.setRemaining(event.getVolume());
-        event.setStart("today");
-        event.setEnd("tomorrow");
         eRepo.save(event);
         return "event_created";
     }
@@ -69,38 +72,69 @@ public class AppController {
         return "events";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteEvent(Model model, @PathVariable(value = "id") String id){
-        return "delete_confirm";
-    }
-//    public static void DeleteRow(String name) {
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/team10", "root", "Burinbobandtom!5");
-//            PreparedStatement st = connection.prepareStatement("DELETE FROM Events WHERE event = ?");
-//            st.setString(1,name);
-//            st.executeUpdate();
-//        } catch(Exception e) {
-//            System.out.println(e);
-//        }
+//    @GetMapping("/delete/{id}")
+//    public String deleteEvent(Model model, @PathVariable(value = "id") String id){
+//        return "delete_confirm";
 //    }
+
     @PostMapping("/delete/{id}")
-    public String deleteEvent(@PathVariable(value = "id") String id){
-//        Event e = eRepo.findById(id);
-//        System.out.println("reached " + id);
-//        Event e = eRepo.findById(id);
+    public String deleteEvent(@PathVariable(value = "id") Long id){
         eRepo.dEvent(id);
         return "delete_done";
     }
 
-//    @Query("DELETE FROM Event e where e.event=:event")
-//    public String deleteEvent(@PathVariable String id){
-//        Optional<Event> e = eRepo.findById(id);
-//        if(e.isPresent()){
-//            eRepo.delete(e.get());
-//            return "Event is deleted with id " + id;
-//        } else {
-//            throw new RuntimeException("Event not found for the id " + id);
-//        }
+//    @GetMapping("/update/{id}")
+//    public String updateEvent(@PathVariable (value = "id") Long id, Model model){
+//        Event event = eRepo.findById(Long.toString(id));
+//        model.addAttribute("event", event);
+//        return "update_event";
 //    }
+
+    @PostMapping("/update/{id}")
+    public String updateEvent(@PathVariable (value = "id") Long id, Model model){
+//        Event event = eRepo.findById(Long.toString(id));
+        Optional<Event> optional = eRepo.findById(id);
+        Event event = null;
+        if (optional.isPresent()) {
+            event = optional.get();
+        } else {
+            throw new RuntimeException(" Event not found for id :: " + id);
+        }
+        model.addAttribute("event", event);
+        return "update_event";
+    }
+
+    @PostMapping("update")
+    public String eventUpdated(Event event) {
+        this.eRepo.save(event);
+        return "event_updated";
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        int pageSize = 5;
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<Event> page = this.eRepo.findAll(pageable);
+
+        List<Event> listEvents = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listEvents", listEvents);
+        return "events";
+    }
+
 }
