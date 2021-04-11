@@ -5,23 +5,24 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class EventPage extends PageObject{
+public class UserPage extends PageObject{
 
-    @FindBy(linkText = "Request Items for an Event")
-    private WebElement requestItemLink;
-
-
+    @FindBy(css = "body > div > div:nth-child(2) > form > input[type=submit]")
+    private WebElement requestItemButton;
 
 
 
-    public EventPage(WebDriver driver) {
+
+
+    public UserPage(WebDriver driver) {
         super(driver);
     }
 
     private JavascriptExecutor jse = (JavascriptExecutor)driver;
 
-    public void clickRequestItemLink(){
-        jse.executeScript("arguments[0].click()", requestItemLink);
+
+    public void clickRequestItemButton(){
+        jse.executeScript("arguments[0].click()", requestItemButton);
     }
 
 

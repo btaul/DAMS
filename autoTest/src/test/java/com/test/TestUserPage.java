@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 
-public class TestEventPage {
+public class TestUserPage {
 
     private static final WebDriver driver = new ChromeDriver();
 
@@ -18,10 +18,13 @@ public class TestEventPage {
         System.setProperty("webdriver.chrome.driver", BaseUrl.CHROME_DRIVER_LOCATION);
     }
 
-
-    @Test(testName = "Test requestItem Link")
+    @Test(testName = "Test requestItem Button")
     public static void testRequestItem() throws InterruptedException {
         RequestDriverSetUp.requestSetUp(driver);
+
+        UserPage userPage = new UserPage(driver);
+        userPage.clickRequestItemButton();
+        assert driver.getCurrentUrl().equals("http://localhost:8084/request_items?");
 //        Thread.sleep(3000);
 
     }
