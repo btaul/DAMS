@@ -36,26 +36,6 @@ public class LoginPage extends PageObject{
         jse.executeScript("arguments[0].click()", signInButton);
     }
 
-//    public String getLogin(){
-//        return this.login.getText();
-//    }
-//    public void clickLogin(){
-//        this.login.click();
-//    }
-//
-//    public String getRegister(){
-//        return this.register.getText();
-//    }
-//    public void clickRegister(){
-//        this.register.click();
-//    }
-//
-//    public String getListAllEvents(){
-//        return this.listAllEvents.getText();
-//    }
-//    public void clickListAllEvents(){
-//        this.listAllEvents.click();
-//    }
 
 
 
