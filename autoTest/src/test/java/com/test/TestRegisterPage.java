@@ -24,6 +24,21 @@ public class TestRegisterPage {
 
     }
 
+    public static void setupRegisterProfile(WebDriver driver, String username, String role, Integer zipCode,
+            String password, String q1, String a1, String q2, String a2){
+        RegisterPage registerPage = new RegisterPage(driver);
+        registerPage.sendUsername(username);
+        registerPage.sendRole(role);
+        registerPage.sendZipcode(zipCode);
+        registerPage.sendPassword(password);
+        registerPage.sendQuestion1(q1);
+        registerPage.sendAnswer1(a1);
+        registerPage.sendQuestion2(q2);
+        registerPage.sendAnswer2(a2);
+        registerPage.clickSignUp();
+
+    }
+
 
 
 
@@ -32,16 +47,10 @@ public class TestRegisterPage {
 
         HomePageDriverSetUp.registerButton(driver);
 
-        RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.sendUsername("testReceipient1");
-        registerPage.sendRole("recipient");
-        registerPage.sendZipcode(52246);
-        registerPage.sendPassword("Abc123!");
-        registerPage.sendQuestion1("What is the brand of your first car?");
-        registerPage.sendAnswer1("civic");
-        registerPage.sendQuestion2("What is your hometown?");
-        registerPage.sendAnswer2("ZZ");
-        registerPage.clickSignUp();
+        setupRegisterProfile(driver, "testReceipient1", "recipient", 52246,
+                "Abc123!", "What is the brand of your first car?","civic",
+                "What is your hometown?", "Zhengzhou");
+
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
 //        Thread.sleep(3000);
@@ -53,17 +62,10 @@ public class TestRegisterPage {
 
         HomePageDriverSetUp.registerButton(driver);
 
+        setupRegisterProfile(driver, "testDonor1", "donor", 52246,
+                "Abc123!", "What is your favorite vacation spot?","beach",
+                "What is the name of your first pet?", "pet");
 
-        RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.sendUsername("testDonor1");
-        registerPage.sendRole("donor");
-        registerPage.sendZipcode(52246);
-        registerPage.sendPassword("Abc123!");
-        registerPage.sendQuestion1("What is your favorite vacation spot?");
-        registerPage.sendAnswer1("beach");
-        registerPage.sendQuestion2("What is the name of your first pet?");
-        registerPage.sendAnswer2("zhizhi");
-        registerPage.clickSignUp();
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
 //        Thread.sleep(3000);
