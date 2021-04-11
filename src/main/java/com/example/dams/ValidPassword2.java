@@ -1,8 +1,17 @@
 package com.example.dams;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ValidPassword2 {
 
-    public boolean truth;
+    private boolean truth;
+
+    private ArrayList<String> errors = new ArrayList<>();
+
+    public List<String> getErrors(){
+        return errors;
+    }
 
     public boolean hasErrors(String password){
         char[] chars = password.toCharArray();
@@ -27,6 +36,21 @@ public class ValidPassword2 {
             else{
                 specialCase.append(c);
             }
+        }
+        if (numbers.length() == 0){
+            errors.add("Please add a digit to password");
+        }
+        if (upLetters.length() == 0){
+            errors.add("Please add a uppercase letter to password");
+        }
+        if (lowLetters.length() == 0){
+            errors.add("Please add a lowercase letter to password");
+        }
+        if (specialCase.length() == 0){
+            errors.add("Please add a special character to password");
+        }
+        if (whiteSpace != 0){
+            errors.add("Please remove the white space");
         }
         truth = (numbers.length() == 0 || upLetters.length() == 0 || lowLetters.length() ==0|| specialCase.length() == 0 || whiteSpace != 0);
         return truth;

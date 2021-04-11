@@ -46,9 +46,15 @@ public class AppController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute("user") User user){
+    public String processRegistration(@ModelAttribute("user") User user, Model model){
+        User checkUserValid = repo.findByUsername(user.getUsername());
+        if(checkUserValid != null){
+            model.addAttribute("inUse", user.getUsername());
+            return "signup_form";
+        }
         ValidPassword2 uvp = new ValidPassword2();
-        if(uvp.hasErrors(user.getPassword())){
+        if(uvp.hasErrors(user.getPassword()) && user.getPassword() != null){
+            model.addAttribute("errors", uvp.getErrors());
             return "signup_form";
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
