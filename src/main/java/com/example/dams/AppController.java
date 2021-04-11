@@ -174,18 +174,23 @@ public class AppController {
 
     @PostMapping("/update/{id}")
     public String updateEvent(@PathVariable (value = "id") Long id, Model model){
-//        Event event = eRepo.findById(Long.toString(id));
         Optional<Event> optional = eRepo.findById(id);
         Event event = null;
         if (optional.isPresent()) {
             event = optional.get();
+        } else {
+            throw new RuntimeException(" Event not found for id :: " + id);
+        }
+        model.addAttribute("event", event);
+        return "update_event";
+    }
 
 
     // display list of donations
     @GetMapping("/donation")
     public String viewDonationPage(Model model) {
 
-        return findPaginated(1, "donorId", "asc", model);
+        return findPaginatedDonation(1, "donorId", "asc", model);
     }
 
     @GetMapping("/showNewDonationForm")
@@ -215,6 +220,7 @@ public class AppController {
         // create model attribute to bind form data
         Donation donation = new Donation();
         model.addAttribute("donation", donation);
+//        List<Donation> list
         List<Requests> listRequests = rRepo.findAll();
         model.addAttribute("requester",listRequests);
         return "redirect:/donation";
@@ -375,13 +381,13 @@ public class AppController {
 
 
     @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+    public String findPaginatedDonation(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
         int pageSize = 5;
 
-        Page<Donation> page = donationService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page<Donation> page = donationService.findPaginatedDonation(pageNo, pageSize, sortField, sortDir);
         List<Donation> listDonations = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
@@ -402,30 +408,17 @@ public class AppController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public User getLoggedInUser(){
-        String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            throw new RuntimeException(" Event not found for id :: " + id);
-        }
-        model.addAttribute("event", event);
-        return "update_event";
-    }
+//    public User getLoggedInUser1(){
+//        String username;
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            username = ((UserDetails)principal).getUsername();
+//        } else {
+//            throw new RuntimeException(" Event not found for id :: " + id);
+//        }
+//        model.addAttribute("event", event);
+//        return "update_event";
+//    }
 
     @PostMapping("update")
     public String eventUpdated(Event event) {
@@ -433,31 +426,31 @@ public class AppController {
         return "event_updated";
     }
 
-    @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<Event> page = this.eRepo.findAll(pageable);
-
-        List<Event> listEvents = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listEvents", listEvents);
-        return "events";
-    }
+//    @GetMapping("/page/{pageNo}")
+//    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+//                                @RequestParam("sortField") String sortField,
+//                                @RequestParam("sortDir") String sortDir,
+//                                Model model) {
+//        int pageSize = 5;
+//
+//        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+//                Sort.by(sortField).descending();
+//
+//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+//        Page<Event> page = this.eRepo.findAll(pageable);
+//
+//        List<Event> listEvents = page.getContent();
+//
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//
+//        model.addAttribute("sortField", sortField);
+//        model.addAttribute("sortDir", sortDir);
+//        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+//
+//        model.addAttribute("listEvents", listEvents);
+//        return "events";
+//    }
 
 }

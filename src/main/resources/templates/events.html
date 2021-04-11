@@ -18,10 +18,10 @@
     <div>
         <h1>List of All Events</h1>
         <h3><a th:href="@{/list_users}">List All Users</a></h3>
-        <h3><a th:href="@{/create}">Create Event</a></h3>
+        <h3><a th:href="@{/create}" th:if="${user.getRole() != null}">Create Event</a></h3>
 <!--        <div th:if="${user.getRole() == 'recipient'}">-->
         <div>
-            <h3><a th:href="@{/list_users}">Request Items for an Event</a></h3>
+            <h3><a th:href="@{/list_users}" th:if="${user.getRole() == 'recipient'}">Request Items for an Event</a></h3>
         </div>
     </div>
     <div>

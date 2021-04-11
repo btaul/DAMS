@@ -19,7 +19,7 @@ public class DonationServiceImpl implements DonationService {
     private DonationRepository donationRepository;
 
     @Override
-    public List<Donation> getAllEmployees() {
+    public List<Donation> getAllDonations() {
         return donationRepository.findAll();
     }
 
@@ -46,7 +46,7 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public Page<Donation> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Donation> findPaginatedDonation(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
