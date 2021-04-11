@@ -2,13 +2,12 @@ package com.test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.seleniumhq.jetty9.server.Authentication;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 
-public class TestRequestItemPage {
+public class TestRequestItemPage6 {
 
     private static final WebDriver driver = new ChromeDriver();
 
@@ -20,8 +19,20 @@ public class TestRequestItemPage {
 
     @Test(testName = "Test request item form")
     public static void testRequestItem() throws InterruptedException {
-        RequestDriverSetUp.requestSetUp(driver);
-        RequestDriverSetUp.clickRequestButton(driver);
+        HomePageDriverSetUp.registerButton(driver);
+
+        String username = "testRecipient1";
+        String password = "Abc123!";
+
+        UserProfileSetting.setupRegisterProfile(driver, username, "recipient", 52246,
+                password, "What is the brand of your first car?","civic",
+                "What is your hometown?", "Zhengzhou");
+
+        LoginDriverSetUp.loginSetup(driver, username, password);
+
+        EventPageDriverSetUp.clickRequestLink(driver);
+
+        UserPageDriverSetUp.clickRequestButton(driver);
 
         RequestItemPage requestItemPage = new RequestItemPage(driver);
         requestItemPage.sendEventsID("1");
