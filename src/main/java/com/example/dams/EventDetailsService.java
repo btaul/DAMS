@@ -1,21 +1,13 @@
 package com.example.dams;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.domain.Page;
 
-public class EventDetailsService implements UserDetailsService {
+public interface EventDetailsService {
+    EventDetails loadEventByID(String var1) throws Exception;
 
-    @Autowired
-    private UserRepository repo;
+//    void dEvent(String id) throws Exception;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repo.findByUsername(username);
-        if (user==null){
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new com.example.dams.CustomUserDetails(user);
-    }
+    void dEvent(Long id) throws Exception;
+
+    Page<Event> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }

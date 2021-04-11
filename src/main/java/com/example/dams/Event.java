@@ -1,12 +1,19 @@
 package com.example.dams;
+
 import javax.persistence.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Table(name = "events")
 public class Event {
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
+//    @GeneratedValue(generator = "system-uuid")
+//    @Column(nullable = false, unique = true, length = 45)
+//    public String id = Integer.toString(ID_GENERATOR.addAndGet(1)/4);
 
     @Column(nullable = false, length = 20)
     public String status;
@@ -14,13 +21,13 @@ public class Event {
     @Column(nullable = false, length = 20)
     public Integer zip;
 
-    @Column(nullable = false, length = 86)
+    @Column(nullable = true, length = 86)
     public String address;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = true, length = 20)
     public String start;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = true, length = 20)
     public String end;
 
     @Column(nullable = false, length = 45)
