@@ -17,6 +17,15 @@ public class TestRequestItemPage6 {
         System.setProperty("webdriver.chrome.driver", BaseUrl.CHROME_DRIVER_LOCATION);
     }
 
+    public static void setUpRequest(WebDriver driver, String eventsID, String item, Integer volume){
+        RequestItemPage requestItemPage = new RequestItemPage(driver);
+        requestItemPage.sendEventsID(eventsID);
+        requestItemPage.sendItem(item);
+        requestItemPage.sendVolume(volume);
+        requestItemPage.clickSubmitRequestButton();
+    }
+
+
     @Test(testName = "Test request item form")
     public static void testRequestItem() throws InterruptedException {
         HomePageDriverSetUp.registerButton(driver);
@@ -34,11 +43,13 @@ public class TestRequestItemPage6 {
 
         UserPageDriverSetUp.clickRequestButton(driver);
 
-        RequestItemPage requestItemPage = new RequestItemPage(driver);
-        requestItemPage.sendEventsID("1");
-        requestItemPage.sendItem("apple");
-        requestItemPage.sendVolume(50);
-        requestItemPage.clickSubmitRequestButton();
+        String eventsID = "1";
+        String item = "apple";
+        Integer volume = 50;
+
+        setUpRequest(driver, eventsID, item, volume);
+
+
         assert driver.getCurrentUrl().equals("http://localhost:8084/request_items");
 
 
