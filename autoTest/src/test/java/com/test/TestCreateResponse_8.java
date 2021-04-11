@@ -84,6 +84,11 @@ public class TestCreateResponse_8 {
 
         assert driver.getCurrentUrl().equals("http://localhost:8084/continueResponse");
 
+        CreateResponse2 createResponse2 = new CreateResponse2(driver);
+        createResponse2.sendItem(item); // in creating a request step
+        createResponse2.clickSaveDonation();
+        assert driver.getCurrentUrl().equals("http://localhost:8084/continueResponse2");
+
 
 
 
@@ -92,7 +97,7 @@ public class TestCreateResponse_8 {
 
 //      We should have a step to delete the request function later!
 
-//        Thread.sleep(3000);
+        Thread.sleep(3000);
 
     }
 
