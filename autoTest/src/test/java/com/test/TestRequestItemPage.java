@@ -21,22 +21,18 @@ public class TestRequestItemPage {
     @Test(testName = "Test request item form")
     public static void testRequestItem() throws InterruptedException {
         RequestDriverSetUp.requestSetUp(driver);
-
-        UserPage userPage = new UserPage(driver);
-        userPage.clickRequestItemButton();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/request_items?");
+        RequestDriverSetUp.clickRequestButton(driver);
 
         RequestItemPage requestItemPage = new RequestItemPage(driver);
         requestItemPage.sendEventsID("1");
         requestItemPage.sendItem("apple");
         requestItemPage.sendVolume(50);
         requestItemPage.clickSubmitRequestButton();
-        Thread.sleep(3000);
         assert driver.getCurrentUrl().equals("http://localhost:8084/request_items");
 
 
 
-        Thread.sleep(3000);
+//        Thread.sleep(3000);
 
     }
 

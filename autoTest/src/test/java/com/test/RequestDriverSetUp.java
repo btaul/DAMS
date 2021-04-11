@@ -13,4 +13,14 @@ public class RequestDriverSetUp {
 //        assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
 
     }
+
+    public static void clickRequestButton(WebDriver driver){
+        RequestDriverSetUp.requestSetUp(driver);
+        UserPage userPage = new UserPage(driver);
+        userPage.clickRequestItemButton();
+    }
+
+
+
+
 }

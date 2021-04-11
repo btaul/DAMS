@@ -22,8 +22,9 @@ public class TestUserPage {
     public static void testRequestItem() throws InterruptedException {
         RequestDriverSetUp.requestSetUp(driver);
 
-        UserPage userPage = new UserPage(driver);
-        userPage.clickRequestItemButton();
+        RequestDriverSetUp.clickRequestButton(driver);
+//        UserPage userPage = new UserPage(driver);
+//        userPage.clickRequestItemButton();
         assert driver.getCurrentUrl().equals("http://localhost:8084/request_items?");
 //        Thread.sleep(3000);
 
