@@ -1,6 +1,6 @@
 package com.test;
 
-import com.test.BaseUrl;
+//import com.test.BaseUrl;
 import com.test.WebHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
