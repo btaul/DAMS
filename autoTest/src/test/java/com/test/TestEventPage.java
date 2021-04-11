@@ -23,26 +23,12 @@ public class TestEventPage {
 
     @Test(testName = "Test requestItem Button")
     public static void testRequestItem() throws InterruptedException {
-
-        WebHomePage webHomePage = new WebHomePage(driver);
-        driver.get(BaseUrl.BASE_URL);
-        webHomePage.clickLogin();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/login");
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.sendUsername("testReceipient1");
-        loginPage.sendPassword("Abc123!");
-        loginPage.clickSignIn();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
-
+        LoginDriverSetUp.loginSetup(driver);
         EventPage eventPage = new EventPage(driver);
         eventPage.clickRequestItem();
         assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
 
-
-        Thread.sleep(3000);
+//        Thread.sleep(3000);
 
     }
 

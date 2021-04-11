@@ -1,17 +1,10 @@
 package com.test;
 
-import com.test.BaseUrl;
-import com.test.WebHomePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
 
 
 public class TestLoginPage {
@@ -27,26 +20,10 @@ public class TestLoginPage {
 
 
 
-    @Test(testName = "Test Login Button")
+    @Test(testName = "Test Login Process")
     public static void testLogin() throws InterruptedException {
-
-
-
-        WebHomePage webHomePage = new WebHomePage(driver);
-        driver.get(BaseUrl.BASE_URL);
-        webHomePage.clickLogin();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/login");
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.sendUsername("testReceipient1");
-        loginPage.sendPassword("Abc123!");
-        loginPage.clickSignIn();
-        assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
-
+        LoginDriverSetUp.loginSetup(driver);
 //        Thread.sleep(3000);
-
     }
 
 
