@@ -24,18 +24,15 @@ public class TestRegisterPage {
 
     }
 
-    public static void navigateToLogin(WebHomePage webHomePage){
-        //Navigate from Homepage to Loginpage
-        driver.get(BaseUrl.BASE_URL);
-//        WebHomePage webHomePage = new WebHomePage(driver);
-        webHomePage.clickRegister();
-    }
 
 
-    @Test(testName = "Test Login Button")
+
+    @Test(testName = "Test Register")
     public static void testRegister() throws InterruptedException {
+
         WebHomePage webHomePage = new WebHomePage(driver);
-        navigateToLogin(webHomePage);
+        driver.get(BaseUrl.BASE_URL);
+        webHomePage.clickRegister();
         assert driver.getCurrentUrl().equals("http://localhost:8084/register");
 
         RegisterPage registerPage = new RegisterPage(driver);

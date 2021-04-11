@@ -82,27 +82,6 @@ public class RegisterPage extends PageObject{
 
 
 
-//    public String getLogin(){
-//        return this.login.getText();
-//    }
-//    public void clickLogin(){
-//        this.login.click();
-//    }
-//
-//    public String getRegister(){
-//        return this.register.getText();
-//    }
-//    public void clickRegister(){
-//        this.register.click();
-//    }
-//
-//    public String getListAllEvents(){
-//        return this.listAllEvents.getText();
-//    }
-//    public void clickListAllEvents(){
-//        this.listAllEvents.click();
-//    }
-
 
 
 
