@@ -15,22 +15,10 @@ public class Event {
 //    @Column(nullable = false, unique = true, length = 45)
 //    public String id = Integer.toString(ID_GENERATOR.addAndGet(1)/4);
 
-    @Column(nullable = true, unique = true, length = 45)
-    public String requester;
-
-    @Column(nullable = true, length = 20)
+    @Column(nullable = false, length = 20)
     public String status;
 
-    @Column(nullable = true, length = 40)
-    public String item;
-
-    @Column(nullable = true, length = 20)
-    public Integer volume;
-
-    @Column(nullable = true, length = 20)
-    public Integer remaining;
-
-    @Column(nullable = true, length = 20)
+    @Column(nullable = false, length = 20)
     public Integer zip;
 
     @Column(nullable = true, length = 86)
@@ -42,54 +30,37 @@ public class Event {
     @Column(nullable = true, length = 20)
     public String end;
 
-    public Event(Long id, String requester, String status, String item, Integer volume, Integer remaining, Integer zip, String address, String start, String end) {
+    @Column(nullable = false, length = 45)
+    public String event;
+
+    public Event(Long id, String status, Integer zip, String address, String start, String end, String event) {
         this.id = id;
-        this.requester = requester;
         this.status = status;
-        this.item = item;
-        this.volume = volume;
-        this.remaining = remaining;
         this.zip = zip;
         this.address = address;
         this.start = start;
         this.end = end;
+        this.event = event;
     }
 
     public Event() {
-//        this.event = Long.getLong("test");
-//        this.requester = "requester";
-//        this.status = "status";
-//        this.item = "item";
-//        this.volume = -10;
-//        this.remaining = -10;
-//        this.zip = -10;
-//        this.address = "address";
-//        this.start = "start";
-//        this.end = "end";
+
     }
 
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
+    public String getEvent() {
+        return event;
+    }
 
-    public Long getId(){
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getRequester() {
-        return requester;
-    }
-
-    public void setRequester(String requester) {
-        this.requester = requester;
     }
 
     public String getStatus() {
@@ -98,30 +69,6 @@ public class Event {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public Integer getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Integer volume) {
-        this.volume = volume;
-    }
-
-    public Integer getRemaining() {
-        return remaining;
-    }
-
-    public void setRemaining(Integer remaining) {
-        this.remaining = remaining;
     }
 
     public Integer getZip() {
