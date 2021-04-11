@@ -23,31 +23,14 @@
 
     <div class="m-3">
         <div class="form-group row">
-            <label class="col-form-label col-4">Item</label>
+            <label class="col-form-label col-4">Description</label>
             <div class="">
                 <label>
-                    <input type="text" class="form-control" th:field="*{item}" required/>
+                    <input type="text" class="form-control" th:field="*{description}" required/>
                 </label>
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-form-label col-4">Volume</label>
-            <div class="">
-                <label>
-                    <input type="text" class="form-control" th:field="*{volume}" required/>
-                </label>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-form-label col-4">Remaining Volume</label>
-            <div class="">
-                <label>
-                    <input type="text" class="form-control" th:field="*{remaining}" required/>
-                </label>
-            </div>
-        </div>
 
         <div class="form-group row">
             <label class="col-form-label col-4">Zip Code</label>
@@ -91,7 +74,7 @@
                 <select name="status" id="status" th:field="*{status}" required>
                     <option value= ""></option>
                     <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="expired">Expired</option>
                 </select>
             </div>
         </div>
