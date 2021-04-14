@@ -20,14 +20,13 @@ public class TestCreateResponse_8 {
     }
 
     public static void createAccountAndLogin(String username, String password, String role){
+        //navigate to register
         HomePageDriverSetUp.registerButton(driver);
-
-
-
+        //create an account
         UserProfileSettingAndRegister.setupRegisterProfile(driver, username, role, 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
-
+        //login
         LoginDriverSetUp.loginSetup(driver, username, password);
 
 
@@ -66,7 +65,7 @@ public class TestCreateResponse_8 {
         String roleRecipient = "recipient";
         createAccountAndLogin(usernameRecipient, passwordRecipient, roleRecipient);
 
-        String eventsID = "1";
+        String eventsID = "3";
         String item = "cucumber";
         Integer volume = 50;
         createRequest(driver, eventsID, item, volume);
@@ -100,7 +99,7 @@ public class TestCreateResponse_8 {
 
 //      We should have a step to delete the request function later!
 
-//        Thread.sleep(3000);
+//        Thread.sleep(5000);
 
     }
 
