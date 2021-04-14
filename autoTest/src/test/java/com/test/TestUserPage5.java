@@ -17,21 +17,22 @@ public class TestUserPage5 {
         System.setProperty("webdriver.chrome.driver", BaseUrl.CHROME_DRIVER_LOCATION);
     }
 
-    @Test(testName = "Test requestItem Button")
+    @Test(testName = "Test requestItem Button on the /list_users page")
     public static void testRequestItem() throws InterruptedException {
+        //navigate to registration
         HomePageDriverSetUp.registerButton(driver);
 
         String username = "testRecipient1";
         String password = "Abc123!";
-
+        //create a recipient account
         UserProfileSettingAndRegister.setupRegisterProfile(driver, username, "recipient", 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
-
+        //login
         LoginDriverSetUp.loginSetup(driver, username, password);
-
+        //click the createRequest link
         EventPageDriverSetUp.clickRequestLink(driver);
-
+        //click RequestItems button
         UserPageDriverSetUp.clickRequestButton(driver);
 
         assert driver.getCurrentUrl().equals("http://localhost:8084/request_items?");
