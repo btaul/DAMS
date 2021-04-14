@@ -24,7 +24,7 @@ public class TestUserPage5 {
         String username = "testRecipient1";
         String password = "Abc123!";
 
-        UserProfileSetting.setupRegisterProfile(driver, username, "recipient", 52246,
+        UserProfileSettingAndRegister.setupRegisterProfile(driver, username, "recipient", 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
 

@@ -2,7 +2,8 @@ package com.test;
 
 import org.openqa.selenium.WebDriver;
 
-public class UserProfileSetting {
+public class UserProfileSettingAndRegister {
+    //this is to sign up a user with the following info
     public static void setupRegisterProfile(WebDriver driver, String username, String role, Integer zipCode,
                                             String password, String q1, String a1, String q2, String a2){
         RegisterPage registerPage = new RegisterPage(driver);

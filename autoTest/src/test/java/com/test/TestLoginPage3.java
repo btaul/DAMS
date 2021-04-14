@@ -22,16 +22,18 @@ public class TestLoginPage3 {
 
     @Test(testName = "Test Login Process")
     public static void testLogin() throws InterruptedException {
+        //navigate to register page
         HomePageDriverSetUp.registerButton(driver);
 
         String username = "testRecipient1";
         String password = "Abc123!";
 
-        UserProfileSetting.setupRegisterProfile(driver, username, "recipient", 52246,
+        //Register first
+        UserProfileSettingAndRegister.setupRegisterProfile(driver, username, "recipient", 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
 
-
+        //Login with the account above
         LoginDriverSetUp.loginSetup(driver, username, password);
         assert driver.getCurrentUrl().equals("http://localhost:8084/list_events");
 //        Thread.sleep(3000);

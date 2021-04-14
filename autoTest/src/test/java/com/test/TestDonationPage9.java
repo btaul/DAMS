@@ -24,7 +24,7 @@ public class TestDonationPage9 {
 
 
 
-        UserProfileSetting.setupRegisterProfile(driver, username, role, 52246,
+        UserProfileSettingAndRegister.setupRegisterProfile(driver, username, role, 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
 

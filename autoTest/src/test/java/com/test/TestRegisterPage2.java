@@ -25,7 +25,7 @@ public class TestRegisterPage2 {
 
         HomePageDriverSetUp.registerButton(driver);
 
-        UserProfileSetting.setupRegisterProfile(driver, "testRecipient1", "recipient", 52246,
+        UserProfileSettingAndRegister.setupRegisterProfile(driver, "testRecipient1", "recipient", 52246,
                 "Abc123!", "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
 
@@ -40,7 +40,7 @@ public class TestRegisterPage2 {
 
         HomePageDriverSetUp.registerButton(driver);
 
-        UserProfileSetting.setupRegisterProfile(driver, "testDonor1", "donor", 52246,
+        UserProfileSettingAndRegister.setupRegisterProfile(driver, "testDonor1", "donor", 52246,
                 "Abc123!", "What is your favorite vacation spot?","beach",
                 "What is the name of your first pet?", "pet");
 
