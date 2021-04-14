@@ -28,25 +28,26 @@ public class TestRequestItemPage6 {
 
     @Test(testName = "Test request item form")
     public static void testRequestItem() throws InterruptedException {
+        //navigate to register
         HomePageDriverSetUp.registerButton(driver);
 
         String username = "testRecipient1";
         String password = "Abc123!";
-
+        //create an account - recipient
         UserProfileSettingAndRegister.setupRegisterProfile(driver, username, "recipient", 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
-
+        //login
         LoginDriverSetUp.loginSetup(driver, username, password);
-
+        //click the createRequest link
         EventPageDriverSetUp.clickRequestLink(driver);
-
+        //click RequestItems button
         UserPageDriverSetUp.clickRequestButton(driver);
 
-        String eventsID = "1";
+        String eventsID = "3";
         String item = "apple";
         Integer volume = 50;
-
+        //set up a request
         setUpRequest(driver, eventsID, item, volume);
 
 
