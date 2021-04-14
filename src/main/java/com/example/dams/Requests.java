@@ -29,6 +29,16 @@ public class Requests {
     @Column(nullable = false, length = 45)
     public Integer zip;
 
+    @Column(nullable = false, length = 45)
+    public String expire;
+
+    public String getExpire() {
+        return expire;
+    }
+
+    public void setExpire(String expire) {
+        this.expire = expire;
+    }
 
     public Requests(){
         this.requestID = null;
@@ -39,8 +49,9 @@ public class Requests {
         this.volume = null;
         this.remaining = null;
         this.zip = null;
+        this.expire = null;
     }
-    public Requests(long requestID, String eventID, String requester,String status, String item, int volume, int remaining, int zip) {
+    public Requests(long requestID, String eventID, String requester,String status, String item, int volume, int remaining, int zip, String expire) {
         this.requestID = requestID;
         this.eventID = eventID;
         this.requester = requester;
@@ -49,6 +60,7 @@ public class Requests {
         this.volume = volume;
         this.remaining = remaining;
         this.zip = zip;
+        this.expire = expire;
     }
 
     public Long getRequestsID() {

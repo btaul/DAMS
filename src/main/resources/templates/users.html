@@ -21,13 +21,24 @@
         </form>
     </div>
 
-
+    <div th:if="${user.getRole()} == 'admin'">
+        <h1>List of All Actions for Admin</h1>
+        <h3><a th:href="@{/list_events}">List All Events</a></h3>
+    </div>
     <div>
+        <form th:if="${user.getRole() == 'recipient'}" th:action="@{/expire_items}" >
+            <input type="submit" value="Expire Items">
+        </form>
+    </div>
+
+
+
+    <div th:if="${user.getRole()} == 'recipient'">
         <h1>List of All Requests</h1>
         <h3><a th:href="@{/list_events}">List All Events</a></h3>
     </div>
     <div>
-        <table class="table table-striped table-bordered" th:if="${user.getRole() == 'recipient' }">
+        <table class="table table-striped table-bordered" th:if="${user.getRole()} == 'recipient'">
             <thead class=""thread-dark>
             <tr>
                 <th>RequestID</th>
@@ -39,7 +50,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="requests: ${requester}" th:if = "${user.getUsername() == requests.getRequester()} " >
+            <tr th:each="requests: ${requester}" th:if = "${user.getUsername() == requests.getRequester() && requests.getStatus() == 'active'} " >
                 <td th:text="${requests.getRequestsID()}">RequestID</td>
                 <td th:text="${requests.getEventsID()}">EventsID</td>
                 <td th:text="${requests.getItem()}">Item</td>
@@ -50,6 +61,17 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/responseToRequest}" >Make a Response</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/showNewDonationForm}" >Make a Pledge</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/backtoDonation}" >Go to your Donation</a>
+    </div>
+
+
 
 </div>
 </body>
