@@ -20,10 +20,9 @@ public class TestEventPage4 {
     }
 
     public static void createAccountAndLogin(String username, String password, String role){
+        //navigate to register page
         HomePageDriverSetUp.registerButton(driver);
-
-
-
+        //register an account
         UserProfileSettingAndRegister.setupRegisterProfile(driver, username, role, 52246,
                 password, "What is the brand of your first car?","civic",
                 "What is your hometown?", "Zhengzhou");
@@ -41,6 +40,7 @@ public class TestEventPage4 {
         String username = "testRecipient1";
         String password = "Abc123!";
         String role = "recipient";
+        //use the method above to create an account - recipient account here
         createAccountAndLogin(username, password, role);
         EventPageDriverSetUp.clickRequestLink(driver);
         assert driver.getCurrentUrl().equals("http://localhost:8084/list_users");
@@ -52,6 +52,7 @@ public class TestEventPage4 {
         String username = "testDonor1";
         String password = "Abc123!";
         String role = "donor";
+        //use the method above to create an account - donor account here
         createAccountAndLogin(username, password, role);
 
         EventPageDriverSetUp.clickPledgeLink(driver);
@@ -68,6 +69,7 @@ public class TestEventPage4 {
         String username = "testDonor1";
         String password = "Abc123!";
         String role = "donor";
+        //use the method above to create an account - donor account here
         createAccountAndLogin(username, password, role);
 
         EventPageDriverSetUp.clickResponseLink(driver);
@@ -83,6 +85,7 @@ public class TestEventPage4 {
         String username = "testDonor1";
         String password = "Abc123!";
         String role = "donor";
+        //use the method above to create an account - donor account here
         createAccountAndLogin(username, password, role);
 
         EventPageDriverSetUp.clickDonationLink(driver);
