@@ -19,6 +19,8 @@ public class EventPage extends PageObject{
     @FindBy(linkText = "Go to your Donation")
     private WebElement donationLink;
 
+    @FindBy(linkText = "Create Event")
+    private WebElement createEventLink;
 
     public EventPage(WebDriver driver) {
         super(driver);
@@ -42,5 +44,8 @@ public class EventPage extends PageObject{
         jse.executeScript("arguments[0].click()", donationLink);
     }
 
+    public void clickCreateEventLink(){
+        jse.executeScript("arguments[0].click()", createEventLink);
+    }
 
 }

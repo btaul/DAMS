@@ -95,6 +95,22 @@ public class TestEventPage4 {
 //        Thread.sleep(3000);
     }
 
+    @Test(testName = "Test create event link")
+    public static void testCreateEventLink() throws InterruptedException {
+
+        String username = "testDonor1";
+        String password = "Abc123!";
+        String role = "donor";
+        //use the method above to create an account - donor account here
+        createAccountAndLogin(username, password, role);
+
+        EventPageDriverSetUp.clickCreateEventLink(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        Thread.sleep(3000);
+        assert driver.getCurrentUrl().equals("http://localhost:8084/create");
+//        Thread.sleep(3000);
+    }
+
 
 
 

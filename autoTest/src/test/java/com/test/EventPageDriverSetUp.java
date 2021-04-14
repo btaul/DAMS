@@ -28,4 +28,10 @@ public class EventPageDriverSetUp {
         eventPage.clickDonationLink();
     }
 
+    public static void clickCreateEventLink(WebDriver driver){
+        EventPage eventPage = new EventPage(driver);
+        eventPage.clickCreateEventLink();
+    }
+
+
 }
