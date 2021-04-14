@@ -52,13 +52,14 @@ public class TestMakePledge7 {
         String username = "testDonor1";
         String password = "Abc123!";
         String role = "donor";
+        //create an account -- donor
         createAccountAndLoginToPledge(username, password, role);
 
 
         String item = "apple";
         Integer donationVolume = 100;
         Integer zip = 52246;
-
+        //create a pledge
         setPledge(driver, item, donationVolume, zip);
 
         assert driver.getCurrentUrl().equals("http://localhost:8084/donation");
