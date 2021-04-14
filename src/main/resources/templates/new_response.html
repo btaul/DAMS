@@ -25,7 +25,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="event: ${listEvents}" >
+      <tr th:each="event: ${listEvents}"  th:if="${event.getStatus() == 'active'}" >
         <td th:text="${event.id}">Event ID</td>
         <td th:text="${event.description}">Description</td>
         <td th:text="${event.status}">Status</td>
@@ -47,9 +47,9 @@
   <form action="#" th:action="@{/continueResponse}" th:object="${donation}"
         method="POST">
 
-    <select th:field="*{eventId}" required>
+    <select th:field="*{eventId}" required  >
       <option value= ""></option>
-      <option th:each="event: ${listEvents}"  th:value="${event.id}" th:text="${event.id}" >
+      <option th:each="event: ${listEvents}"  th:value="${event.id}" th:text="${event.id}"  th:if="${event.getStatus() == 'active'}">
       </option>
     </select>
 
