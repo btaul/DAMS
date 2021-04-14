@@ -71,7 +71,7 @@ public class TestDonationPage9 {
         String roleRecipient = "recipient";
         createAccountAndLogin(usernameRecipient, passwordRecipient, roleRecipient);
 
-        String eventsID = "1";
+        String eventsID = "3";
         String item = "cucumber";
         Integer volume = 50;
         createRequest(driver, eventsID, item, volume);
@@ -127,7 +127,7 @@ public class TestDonationPage9 {
         assert driver.getCurrentUrl().equals("http://localhost:8084/donation");
 
 
-        Thread.sleep(3000);
+//        Thread.sleep(3000);
 
 
     }
