@@ -5,9 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class CreateResponse1{
+public class CreateResponse1 extends PageObject{
 
-    private JavascriptExecutor jse;
 
     @FindBy(id = "eventId")
     private WebElement eventId;
@@ -17,8 +16,10 @@ public class CreateResponse1{
 
 
     public CreateResponse1(WebDriver driver) {
-        this.jse =  (JavascriptExecutor)driver;
+        super(driver);
     }
+
+    private JavascriptExecutor jse = (JavascriptExecutor)driver;
 
     public void sendEventId(String id){
         jse.executeScript(String.format("arguments[0].value='%s';", id), eventId);
