@@ -27,7 +27,8 @@ public class RequestsService {
                         resultSet.getString("item"),
                         resultSet.getInt("volume"),
                         resultSet.getInt("remaining"),
-                        resultSet.getInt("zip"));
+                        resultSet.getInt("zip"),
+                        resultSet.getString("expire"));
                 return requests;
             }
         };

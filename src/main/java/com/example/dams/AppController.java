@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,7 +120,6 @@ public class AppController {
         return "requestEventsTable";
     }
 
-
     @PostMapping("/request_items")
     public String requestSuccessful(@ModelAttribute("request") Requests request){
         request.setStatus("active");
@@ -128,6 +129,21 @@ public class AppController {
         request.setZip(loggedInUser.getZipcode());
         rRepo.save(request);
         return "request_success";
+    }
+
+    @GetMapping("/expire_items")
+    public String expireManual( Model model){
+        List<Requests> items = rRepo.findAll();
+        model.addAttribute("listRequests", items);
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user",loggedInUser);
+        return "expire_items";
+    }
+
+    @PostMapping("/expire_items/{id}")
+    public String expireAdmin(@PathVariable(value = "id") Long id){
+        rRepo.eRequest(id);
+        return "expire_done";
     }
 
     @GetMapping("/donate_items")

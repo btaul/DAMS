@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Events - DAMS</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post"  th:if="${user.getRole() != null}">
+            <input type="submit" value="Sign Out">
+            <p>
+                Time to Expire Items! <b>[[${#request.userPrincipal.principal.username}]]</b>
+            </p>
+        </form>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class=""thread-dark>
+            <tr>
+                <th>Request ID</th>
+                <th>Event ID</th>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Zip Code</th>
+                <th>Volume</th>
+                <th>Remaining</th>
+                <th>Expire Date</th>
+                <th>Expire</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event: ${listRequests}" th:if = "${event.status != 'inactive' && user.getUsername() == event.getRequester()}">
+                <td th:text="${event.requestID}">Request ID</td>
+                <td th:text="${event.eventID}">Event ID</td>
+                <td th:text="${event.item}">Item</td>
+                <td th:text="${event.status}">Status</td>
+                <td th:text="${event.zip}">Zip Code</td>
+                <td th:text="${event.volume}">Volume</td>
+                <td th:text="${event.remaining}">Remaining</td>
+                <td th:text="${event.expire}">Expire Date</td>
+                <td><form th:action="@{'/expire_items/' + ${event.requestID}}" method="post">
+                    <div>
+                        <button type="submit" value="expire">Expire</button>
+                    </div>
+                </form></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
