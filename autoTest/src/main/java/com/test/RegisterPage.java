@@ -32,9 +32,8 @@ public class RegisterPage extends PageObject{
     @FindBy(id = "answer2")
     private WebElement answer2;
 
-    @FindBy(css = "body > div > form > div > div:nth-child(9) > button")
+    @FindBy(css = "body > div > form > div > div:nth-child(11) > button")
     private WebElement signUpButton;
-
 
     public RegisterPage(WebDriver driver) {
         super(driver);
