@@ -1,0 +1,133 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="ISO-8859-1">-->
+<!--    <title>Donation</title>-->
+
+<!--    <link rel="stylesheet"-->
+<!--          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <h1>Donation</h1>-->
+<!--    <hr>-->
+<!--    <h2>Update Donation</h2>-->
+
+<!--    <div>-->
+<!--        <table class="table table-striped table-bordered" >-->
+<!--            <thead class=""thread-dark>-->
+<!--            <tr>-->
+<!--                <th>RequestID</th>-->
+<!--                <th>EventsID</th>-->
+<!--                <th>Item</th>-->
+<!--                <th>Volume</th>-->
+<!--                <th>Remaining</th>-->
+<!--                <th>Status</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="requests: ${requester}" th:if="${donation.getPledge().equals('N') &&-->
+<!--                    donation.getItem() == requests.getItem()  &&-->
+<!--                    donation.getEventId() == requests.getEventsID()   &&-->
+<!--                    requests.getStatus() == 'active'}"-->
+<!--                th:with="showRemain=*{requests.getRemaining() - donation.getDonationVolume()}" >-->
+<!--                <td th:text="${requests.getRequestsID()}">RequestID</td>-->
+<!--                <td th:text="${requests.getEventsID()}">EventsID</td>-->
+<!--                <td th:text="${requests.getItem()}">Item</td>-->
+<!--                <td th:text="${requests.getVolume()}">Volume</td>-->
+
+<!--                &lt;!&ndash;                <td th:text="${requests.getRemaining()}">Remaining</td>&ndash;&gt;-->
+
+<!--                <td th:text="${showRemain}"></td>-->
+
+<!--                <td th:text="${requests.getStatus()}">Status</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+
+
+
+
+<!--    <form action="#" th:action="@{/saveUpdate}" th:object="${donation}"-->
+<!--          method="POST">-->
+
+<!--        &lt;!&ndash; Add hidden form field to handle update &ndash;&gt;-->
+<!--        <input type="text" th:if="${donation.pledge.equals('Y')}" maxlength = "30"-->
+<!--               th:field="*{item}" th:value="${donation.item}" />-->
+
+<!--        <input type="hidden" th:if="${donation.pledge.equals('N')}"-->
+<!--               th:field="*{item}" class="form-control mb-4 col-4" required>-->
+
+
+
+<!--        <input type="hidden" th:field="*{id}" th:value="${donation.id}" />-->
+
+<!--        <input type="number" th:field="*{donationVolume}" min = "0" max = "999"-->
+<!--               th:if="${donation.pledge.equals('Y')}" class="form-control mb-4 col-4" required>-->
+
+<!--        <input type="number" th:field="*{donationVolume}" min = "0" th:max = "${req.getRemaining()}"-->
+<!--               th:if="${donation.pledge.equals('N')}" class="form-control mb-4 col-4" required>-->
+
+<!--        <input type="number" th:field="*{zip}" min = "0" max = "99999" class="form-control mb-4 col-4" required >-->
+
+<!--        <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />-->
+<!--        <input type="hidden" th:field="*{pledge}" th:value="${donation.pledge}" />-->
+
+<!--        <button type="submit" class="btn btn-info col-2"> Update Donation</button>-->
+<!--    </form>-->
+
+<!--    <hr>-->
+
+<!--    &lt;!&ndash;    <a th:href = "@{/backtoDonation}"> Back to Donation List</a>&ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Pledge to Request - DAMS</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <p>
+            Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+        </p>
+    </div>
+    <div>
+        <h1>Match Pledge to Request</h1>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr th:if="${user.getRole() == 'admin'}">
+                <th>Requester</th>
+                <th>Event</th>
+                <th>Requested Item</th>
+                <th>Requested Volume</th>
+                <th>Zip Code</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tr th:each="request : ${listRequests}" th:if="${donation.getItem() == request.getItem() && request.getStatus() != 'inactive'}">
+                <td th:text="${request.requester}"></td>
+                <td th:text="${request.eventsID}"></td>
+                <td th:text="${request.item}"></td>
+                <td th:text="${request.volume}"></td>
+                <td th:text="${request.zip}"></td>
+<!--                <td><a th:href="@{'matchPledgeToRequest/' + ${donation.getId()} + '/' + ${request.getEventsID()}}" class="btn btn-dark">Match</a></td>-->
+                <td><a th:href="@{/matchPledge/{donationId}/{eventId}(donationId=${donation.id}, eventId=${request.eventsID})}" class="btn btn-dark">Match</a></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h3><a th:href="@{/list_users}">Home Screen</a></h3>
+        <h3><a th:href="@{/match}" th:if="${user.getRole() == 'admin' }">Match Different Pledge</a></h3>
+    </div>
+</div>
+</body>
+</html>

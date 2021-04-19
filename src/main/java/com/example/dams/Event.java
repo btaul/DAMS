@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Entity
 @Table(name = "events")
 public class Event {
-    private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+//    private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -86,7 +86,7 @@ public class AppController {
     @PostMapping("/create")
     public String createEvent(Event event){
         event.setStatus("active");
-
+        event.setId(Integer.toUnsignedLong(14));
         eRepo.save(event);
         return "event_created";
     }
@@ -440,6 +440,46 @@ public class AppController {
     public String eventUpdated(Event event) {
         this.eRepo.save(event);
         return "event_updated";
+    }
+
+    @GetMapping("match")
+    public String match(Model model){
+//        List<Event> listEvents = eRepo.findAll();
+//        model.addAttribute("listEvents", listEvents);
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+        List<Donation> listDonations = donationService.getAllDonations();
+        model.addAttribute("listDonations", listDonations);
+        return "match_pledge";
+    }
+
+    @GetMapping("matchPledge/{id}")
+    public String matchToEvent(Model model, @PathVariable (value = "id") long id){
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+        List<Requests> listRequests = rRepo.findAll();
+        model.addAttribute("listRequests", listRequests);
+        Donation donation = donationService.getDonationById(id);
+        model.addAttribute("donation", donation);
+        return "match_request";
+    }
+
+    @GetMapping("matchPledge/{donationId}/{eventId}")
+    public String matched(Model model, @PathVariable (value = "donationId") long donationId,
+                          @PathVariable (value = "eventId") String eventId){
+        Donation donation = donationService.getDonationById(donationId);
+        donation.setEventId(eventId);
+        donation.setPledge("N");
+//        donationService.saveDonation(donation);
+//        return "redirect:/list_events";
+        // save donation to database
+        donationService.saveDonation(donation);
+        List<Requests> listRequests = rRepo.findAll();
+        if(donation.getPledge().equals("N")) {
+            saveDonationToRequest(donation, listRequests);
+        }
+//        model.addAttribute("requester",listRequests);
+        return "redirect:/list_events";
     }
 
 //    @GetMapping("/page/{pageNo}")
