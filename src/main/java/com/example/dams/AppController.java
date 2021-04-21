@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -84,7 +87,21 @@ public class AppController {
     }
 
     @PostMapping("/create")
-    public String createEvent(Event event){
+    public String createEvent(Event event, Model model){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(event.getStart(),dtf);
+        LocalDate endDate = LocalDate.parse(event.getEnd(),dtf);
+        LocalDate localDate = LocalDate.now();
+        boolean isBeforeLocal = startDate.isBefore(localDate);
+        if(isBeforeLocal){
+            model.addAttribute("errorsLocal", "Start Date starts before Local Date");
+            return "create_event";
+        }
+        boolean isBeforeStart = endDate.isBefore(startDate);
+        if (isBeforeStart){
+            model.addAttribute("errorsStart", "End Date starts before Start Date");
+            return "create_event";
+        }
         event.setStatus("active");
         event.setId(Integer.toUnsignedLong(14));
         eRepo.save(event);
@@ -121,7 +138,19 @@ public class AppController {
     }
 
     @PostMapping("/request_items")
-    public String requestSuccessful(@ModelAttribute("request") Requests request){
+    public String requestSuccessful(@ModelAttribute("request") Requests request, Model model){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate expiredDate = LocalDate.parse(request.getExpire(),dtf);
+        boolean isBefore = expiredDate.isBefore(localDate);
+        if (isBefore){
+            List<Event> listEvents = eRepo.findAll();
+            model.addAttribute("listEvents", listEvents);
+            User loggedInUser = getLoggedInUser();
+            model.addAttribute("user", loggedInUser);
+            model.addAttribute("errors", "Invalid Expiration Date");
+            return "requestEventsTable";
+        }
         request.setStatus("active");
         request.setRemaining(request.getVolume());
         User loggedInUser = getLoggedInUser();
