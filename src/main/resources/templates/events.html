@@ -19,6 +19,7 @@
         <h1>List of All Events</h1>
         <h3><a th:href="@{/list_users}" th:if="${user.getRole != null}">Home Screen</a></h3>
         <h3><a th:href="@{/create}" th:if="${user.getRole() == 'admin' }">Create Event</a></h3>
+        <h3><a th:href="@{/addApprovedItems}" th:if="${user.getRole() == 'admin' }">Add Item to Event</a></h3>
         <h3><a th:href="@{/match}" th:if="${user.getRole() == 'admin' }">Match Pledge to Request</a></h3>
     </div>
     <div >

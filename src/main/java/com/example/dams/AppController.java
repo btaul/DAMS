@@ -2,10 +2,6 @@ package com.example.dams;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -40,6 +33,9 @@ public class AppController {
     @Autowired
     private RequestsRepository rRepo;
 
+    @Autowired
+    private ItemsRepository iRepo;
+
     @ModelAttribute("user")
     public User userDto() {
         return new User();
@@ -49,6 +45,9 @@ public class AppController {
     public Requests requestDto() {
         return new Requests();
     }
+
+    @ModelAttribute("item")
+    public Items itemsDto(){return new Items(); }
 
     @GetMapping("")
     public String viewHomePage(){
@@ -108,6 +107,26 @@ public class AppController {
         return "event_created";
     }
 
+    @GetMapping("/addApprovedItems")
+    public String chooseEventForItem(Model model){
+        List<Event> listEvents = eRepo.findAll();
+        model.addAttribute("listEvents", listEvents);
+        return "addItemToEvent";
+    }
+
+    @PostMapping("/addApprovedItems/{id}")
+    public String addingItem(Model model, @PathVariable(value = "id") Long id){
+        model.addAttribute("iid",id);
+        return "addItemToEvent2";
+    }
+
+    @PostMapping("/addApprovedItems/{id}/item")
+    public String addingItem2(@ModelAttribute("item") Items item, @PathVariable(value = "id") Long id){
+        item.setEventid(id);
+        iRepo.save(item);
+        return "add_successful";
+    }
+
     @GetMapping("/list_users")
     public String viewUserList(Model model){
         List<Requests> listRequests = rRepo.findAll();
@@ -137,21 +156,33 @@ public class AppController {
         return "requestEventsTable";
     }
 
-    @PostMapping("/request_items")
-    public String requestSuccessful(@ModelAttribute("request") Requests request, Model model){
+    @PostMapping("/request_items/{id}")
+    public String recipientRequest2(@PathVariable(value = "id") Long id, Model model){
+        List<Items> listItems = iRepo.findAll();
+        model.addAttribute("listItems", listItems);
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+        model.addAttribute("eid",id);
+        return "requestsEventsTable2";
+    }
+
+    @PostMapping("/request_items/{id}/addItem")
+    public String requestSuccessful(@PathVariable(value = "id") Long id, @ModelAttribute("request") Requests request, Model model){
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate expiredDate = LocalDate.parse(request.getExpire(),dtf);
         boolean isBefore = expiredDate.isBefore(localDate);
         if (isBefore){
-            List<Event> listEvents = eRepo.findAll();
-            model.addAttribute("listEvents", listEvents);
+            List<Items> listItems = iRepo.findAll();
+            model.addAttribute("listItems", listItems);
             User loggedInUser = getLoggedInUser();
             model.addAttribute("user", loggedInUser);
+            model.addAttribute("eid",id);
             model.addAttribute("errors", "Invalid Expiration Date");
-            return "requestEventsTable";
+            return "requestsEventsTable2";
         }
         request.setStatus("active");
+        request.setEventsID(id.toString());
         request.setRemaining(request.getVolume());
         User loggedInUser = getLoggedInUser();
         request.setRequester(loggedInUser.getUsername());
