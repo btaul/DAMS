@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -127,6 +128,32 @@ public class AppController {
         return "add_successful";
     }
 
+    @GetMapping("/modifyApprovedItems")
+    public String modifyingItem(Model model){
+        List<Items> itemsList = iRepo.findAll();
+        model.addAttribute("listItems",itemsList);
+        return "modifyItemToEvent";
+    }
+
+    @PostMapping("/modifyApprovedItems/{id}/delete")
+    public String modifyingItemPostDelete(@PathVariable(value = "id") Long id){
+        iRepo.delete(iRepo.findByItemID(id));
+        return "modify_item_success";
+    }
+
+    @PostMapping("/modifyApprovedItems/{id}/update")
+    public String modifyingItemPostUpdate(@PathVariable(value = "id") Long id, Model model){
+        model.addAttribute("item",iRepo.findByItemID(id));
+        return "modifyItemUpdate";
+    }
+
+    @PostMapping("/modifyApprovedItems/{id}/update/done")
+    public String modifyItemPostUpdate2(@PathVariable(value = "id") Long id,Items i){
+        i.setIditems(id);
+        iRepo.save(i);
+        return "modify_item_success";
+    }
+
     @GetMapping("/list_users")
     public String viewUserList(Model model){
         List<Requests> listRequests = rRepo.findAll();
@@ -190,6 +217,52 @@ public class AppController {
         rRepo.save(request);
         return "request_success";
     }
+
+    @PostMapping("/delete_request/{id}")
+    public String deleteRequest(@PathVariable(value = "id") Long id){
+        rRepo.delete(rRepo.findByRequestID(id));
+        return "request_modified_success";
+    }
+
+    @PostMapping("/update_request/{id}")
+    public String updateRequest(@PathVariable(value = "id") Long id, Model model){
+        List <Items> items = iRepo.findAll();
+        model.addAttribute("request", rRepo.findByRequestID(id));
+        Requests r = rRepo.findByRequestID(id);
+        model.addAttribute("reid",r.getEventsID());
+        ArrayList<String> items2 = new ArrayList<>();
+        for (Items item : items) {
+            if (item.getEventid().toString().equals(r.getEventsID())) {
+                items2.add(item.getItem());
+            }
+        }
+        model.addAttribute("listItems", items2);
+        return "request_update";
+    }
+
+    @PostMapping("update_request/{id}/finished")
+    public String updateRequestItems(@PathVariable(value = "id") Long id, Requests request, Model model){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate expiredDate = LocalDate.parse(request.getExpire(),dtf);
+        boolean isBefore = expiredDate.isBefore(localDate);
+        if (isBefore){
+            model.addAttribute("request", rRepo.findByRequestID(id));
+            model.addAttribute("listItems",iRepo.findAll());
+            model.addAttribute("reid",id);
+            model.addAttribute("errors", "Invalid Expiration Date");
+            return "request_update";
+        }
+        request.setRemaining(request.getVolume());
+        request.setStatus("active");
+        User loggedInUser = getLoggedInUser();
+        request.setRequester(loggedInUser.getUsername());
+        request.setZip(loggedInUser.getZipcode());
+        request.setRequestsID(id);
+        rRepo.save(request);
+        return "request_modified_success";
+    }
+
 
     @GetMapping("/expire_items")
     public String expireManual( Model model){

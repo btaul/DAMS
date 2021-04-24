@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <title>Choose Item</title>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post">
+            <input type="submit" value="Sign Out">
+            <p>
+                Time to Modify Items!!!!
+            </p>
+        </form>
+    </div>
+    <div >
+        <table class="table table-striped table-bordered">
+            <thead class=""thread-dark>
+            <tr>
+                <th>Item ID</th>
+                <th>Event ID</th>
+                <th>Item</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="i: ${listItems}">
+                <td th:text="${i.iditems}">Item ID</td>
+                <td th:text="${i.eventid}">Event ID</td>
+                <td th:text="${i.item}">Item</td>
+                <td><form th:action="@{'/modifyApprovedItems/' + ${i.getIditems()} + '/update'}" method="post">
+                    <div>
+                        <button type="submit">Update</button>
+                    </div>
+                </form></td>
+                <td><form th:action="@{'/modifyApprovedItems/' + ${i.getIditems()} + '/delete'}" method="post">
+                    <div>
+                        <button type="submit">Delete</button>
+                    </div>
+                </form></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

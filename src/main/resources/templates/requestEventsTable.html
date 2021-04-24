@@ -29,7 +29,7 @@
                     <th>Address</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>Choose Event</th>
+                    <th>Choose Event:</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                     <td th:text="${event.address}">Address</td>
                     <td th:text="${event.start}">Start Date</td>
                     <td th:text="${event.end}">End Date</td>
-                    <td><form th:action="@{'/request_items/' + ${event.getId()}}" method="post">
+                    <td><form th:action="@{'/request_items/'+${event.getId()}}" method="post">
                         <div>
                             <button type="submit">Add</button>
                         </div>
