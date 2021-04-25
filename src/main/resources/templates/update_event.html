@@ -12,7 +12,7 @@
             <input type="submit" value="Sign Out">
         </form>
     </div>
-    <h1>Create Event</h1>
+    <h1>Update Event</h1>
     <h3><a th:href="@{/list_events}">List All Events</a></h3>
 </div>
 <form th:action="@{/update}" method="post"
@@ -54,20 +54,34 @@
             <label class="col-form-label col-4">Start Date</label>
             <div class="">
                 <label>
-                    <input type="text" class="form-control" th:field="*{start}" required/>
+                    <input type="date" class="form-control" th:field="*{start}" required/>
                 </label>
             </div>
         </div>
-
+        <div class="form-group row">
+            <label class="col-form-label col-4"></label>
+            <div class="">
+                <div th:if="${errorsLocal != null}" class="alert alert-danger notification" role="alert">
+                    <p th:each = "i: ${errorsLocal}" th:text="${i}"></p>
+                </div>
+            </div>
+        </div>
         <div class="form-group row">
             <label class="col-form-label col-4">End Date</label>
             <div class="">
                 <label>
-                    <input type="text" class="form-control" th:field="*{end}" required/>
+                    <input type="date" class="form-control" th:field="*{end}" required/>
                 </label>
             </div>
         </div>
-
+        <div class="form-group row">
+            <label class="col-form-label col-4"></label>
+            <div class="">
+                <div th:if="${errorsStart != null}" class="alert alert-danger notification" role="alert">
+                    <p th:each = "i: ${errorsStart}" th:text="${i}"></p>
+                </div>
+            </div>
+        </div>
         <div class="form-group row">
             <label class="col-form-label col-4">Status</label>
             <div class="">

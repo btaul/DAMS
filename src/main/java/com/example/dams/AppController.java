@@ -77,7 +77,7 @@ public class AppController {
         user.setPassword(encodedPassword);
         user.setStatus("active");
         repo.save(user);
-        return "register_success";
+        return "redirect:/list_users";
     }
 
     @GetMapping("/create")
@@ -105,7 +105,7 @@ public class AppController {
         event.setStatus("active");
         event.setId(Integer.toUnsignedLong(14));
         eRepo.save(event);
-        return "event_created";
+        return "redirect:/list_events";
     }
 
     @GetMapping("/addApprovedItems")
@@ -125,7 +125,7 @@ public class AppController {
     public String addingItem2(@ModelAttribute("item") Items item, @PathVariable(value = "id") Long id){
         item.setEventid(id);
         iRepo.save(item);
-        return "add_successful";
+        return "redirect:/list_events";
     }
 
     @GetMapping("/modifyApprovedItems")
@@ -138,7 +138,7 @@ public class AppController {
     @PostMapping("/modifyApprovedItems/{id}/delete")
     public String modifyingItemPostDelete(@PathVariable(value = "id") Long id){
         iRepo.delete(iRepo.findByItemID(id));
-        return "modify_item_success";
+        return "redirect:/list_events";
     }
 
     @PostMapping("/modifyApprovedItems/{id}/update")
@@ -151,7 +151,7 @@ public class AppController {
     public String modifyItemPostUpdate2(@PathVariable(value = "id") Long id,Items i){
         i.setIditems(id);
         iRepo.save(i);
-        return "modify_item_success";
+        return "redirect:/list_events";
     }
 
     @GetMapping("/list_users")
@@ -215,13 +215,13 @@ public class AppController {
         request.setRequester(loggedInUser.getUsername());
         request.setZip(loggedInUser.getZipcode());
         rRepo.save(request);
-        return "request_success";
+        return "redirect:/list_users";
     }
 
     @PostMapping("/delete_request/{id}")
     public String deleteRequest(@PathVariable(value = "id") Long id){
         rRepo.delete(rRepo.findByRequestID(id));
-        return "request_modified_success";
+        return "redirect:/list_users";
     }
 
     @PostMapping("/update_request/{id}")
@@ -260,7 +260,7 @@ public class AppController {
         request.setZip(loggedInUser.getZipcode());
         request.setRequestsID(id);
         rRepo.save(request);
-        return "request_modified_success";
+        return "redirect:/list_users";
     }
 
 
@@ -276,7 +276,7 @@ public class AppController {
     @PostMapping("/expire_items/{id}")
     public String expireAdmin(@PathVariable(value = "id") Long id){
         rRepo.eRequest(id);
-        return "expire_done";
+        return "redirect:/list_users";
     }
 
     @GetMapping("/donate_items")
@@ -311,7 +311,7 @@ public class AppController {
     @PostMapping("/delete/{id}")
     public String deleteEvent(@PathVariable(value = "id") Long id){
         eRepo.dEvent(id);
-        return "delete_done";
+        return "redirect:/list_events";
     }
 
 //    @GetMapping("/update/{id}")
@@ -319,6 +319,10 @@ public class AppController {
 //        Event event = eRepo.findById(Long.toString(id));
 //        model.addAttribute("event", event);
 //        return "update_event";
+//    }
+//    @GetMapping("/update/{id}")
+//    public String updateEventRedirect(@PathVariable (value = "id") Long id){
+//        return "redirect:/update/" + id;
 //    }
 
     @PostMapping("/update/{id}")
@@ -330,7 +334,26 @@ public class AppController {
         } else {
             throw new RuntimeException(" Event not found for id :: " + id);
         }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(event.getStart(),dtf);
+        LocalDate endDate = LocalDate.parse(event.getEnd(),dtf);
+        LocalDate localDate = LocalDate.now();
         model.addAttribute("event", event);
+        boolean isBeforeLocal = startDate.isBefore(localDate);
+        if(isBeforeLocal){
+            model.addAttribute("errorsLocal", "Start Date starts before Local Date");
+            System.out.println("before local");
+            return "update_event";
+        }
+        boolean isBeforeStart = endDate.isBefore(startDate);
+        if (isBeforeStart){
+            model.addAttribute("errorsStart", "End Date starts before Start Date");
+            System.out.println("before start");
+            return "update_event";
+        }
+        event.setStart(startDate.toString());
+        event.setEnd(endDate.toString());
+        eRepo.save(event);
         return "update_event";
     }
 
@@ -577,7 +600,7 @@ public class AppController {
     @PostMapping("update")
     public String eventUpdated(Event event) {
         this.eRepo.save(event);
-        return "event_updated";
+        return "redirect:/list_events";
     }
 
     @GetMapping("match")
