@@ -33,7 +33,11 @@ public class Donation {
     @Column(name = "pledge")
     private String pledge;
 
+    @Column(name = "approved")
+    private String approved;
 
+    @Column(name = "shipping")
+    private String shipping;
 
     public long getId() {
         return id;
@@ -81,4 +85,17 @@ public class Donation {
         this.pledge = pledge;
     }
 
+    public String getApproved() {
+        return approved;
+    }
+    public void setApproved(String approved) {
+        this.approved = approved;
+    }
+
+    public String getShipping() {
+        return shipping;
+    }
+    public void setShipping(String shipping) {
+        this.shipping = shipping;
+    }
 }

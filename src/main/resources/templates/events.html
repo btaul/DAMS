@@ -20,6 +20,7 @@
         <h3><a th:href="@{/list_users}" th:if="${user.getRole != null}">Home Screen</a></h3>
         <h3><a th:href="@{/create}" th:if="${user.getRole() == 'admin' }">Create Event</a></h3>
         <h3><a th:href="@{/match}" th:if="${user.getRole() == 'admin' }">Match Pledge to Request</a></h3>
+        <h3><a th:href="@{/approve}" th:if="${user.getRole() == 'admin' }">Approve Donations</a></h3>
     </div>
     <div >
         <table class="table table-striped table-bordered">

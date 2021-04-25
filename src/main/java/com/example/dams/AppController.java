@@ -214,6 +214,7 @@ public class AppController {
         // create model attribute to bind form data
         Donation donation = new Donation();
         donation.setPledge("Y");
+        donation.setApproved("N");
         model.addAttribute("donation", donation);
         return "new_pledge";
     }
@@ -223,6 +224,7 @@ public class AppController {
         // create model attribute to bind form data
         Donation donation = new Donation();
         donation.setPledge("N");
+        donation.setApproved("N");
         model.addAttribute("donation", donation);
         List<Event> listEvents = eRepo.findAll();
         model.addAttribute("listEvents", listEvents);
@@ -254,6 +256,7 @@ public class AppController {
         donation.setDonorId(loggedInUser.getUsername());
         donation.setEventId("Wait to be matched");
         donation.setPledge("Y");
+        donation.setApproved("N");
         donationService.saveDonation(donation);
         List<Requests> listRequests = rRepo.findAll();
         model.addAttribute("requester",listRequests);
@@ -265,6 +268,7 @@ public class AppController {
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
         donation.setPledge("N");
+        donation.setApproved("N");
         donationService.saveDonation(donation);
 
         List<Requests> listRequests = rRepo.findAll();
@@ -310,6 +314,7 @@ public class AppController {
         // save donation to database
         User loggedInUser = getLoggedInUser();
         donation.setDonorId(loggedInUser.getUsername());
+        donation.setApproved("N");
         donationService.saveDonation(donation);
         List<Requests> listRequests = rRepo.findAll();
         if(donation.getPledge().equals("N")) {
@@ -480,6 +485,39 @@ public class AppController {
         }
 //        model.addAttribute("requester",listRequests);
         return "redirect:/list_events";
+    }
+
+    @GetMapping("approve")
+    public String approve(Model model){
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+        List<Donation> listDonations = donationService.getAllDonations();
+        model.addAttribute("listDonations", listDonations);
+        return "approve_donations";
+    }
+
+    @GetMapping("approve/{id}")
+    public String approveDonation(Model model, @PathVariable (value = "id") long id){
+        Donation donation = donationService.getDonationById(id);
+        donation.setApproved("Y");
+        donation.setShipping("pending");
+        donationService.saveDonation(donation);
+        return "approve_donations";
+    }
+
+    @GetMapping("shipping/{id}")
+    public String updateShipping(Model model, @PathVariable (value = "id") long id){
+        User loggedInUser = getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
+        Donation donation = donationService.getDonationById(id);
+        model.addAttribute(donation);
+        return "shipping";
+    }
+
+    @PostMapping("saveShipping")
+    public String saveShipping(@ModelAttribute("donation") Donation donation, Model model){
+        donationService.saveDonation(donation);
+        return "redirect:donation";
     }
 
 //    @GetMapping("/page/{pageNo}")
