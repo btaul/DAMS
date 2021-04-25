@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration - DAMS</title>
+    <title>Request Choose Event - DAMS</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
@@ -18,13 +18,10 @@
     <div>
         <h1>Recipient Request</h1>
     </div>
-    <form th:action="@{/request_items}" method="post"
-          style="max-width: 600px; margin: 0 auto;"
-          th:object="${request}"
-    >
+    <form style="max-width: 600px; margin: 0 auto;">
         <div>
             <table class="table table-striped table-bordered">
-                <thead class=""thread-dark>
+                <thead class="thread-dark">
                 <tr>
                     <th>Event ID</th>
                     <th>Description</th>
@@ -32,58 +29,25 @@
                     <th>Address</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>Choose Event:</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="event: ${listEvents}" th:if="${event.getZip() == user.getZipcode() && event.getStatus() == 'active'}" >
                     <td th:text="${event.id}">Event ID</td>
-                    <td th:text="${event.description}">Requester</td>
+                    <td th:text="${event.description}">Description</td>
                     <td th:text="${event.zip}">Zip Code</td>
                     <td th:text="${event.address}">Address</td>
                     <td th:text="${event.start}">Start Date</td>
                     <td th:text="${event.end}">End Date</td>
+                    <td><form th:action="@{'/request_items/'+${event.getId()}}" method="post">
+                        <div>
+                            <button type="submit">Add</button>
+                        </div>
+                    </form></td>
                 </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="form-group row3">
-            <div class="form-group row">
-                <label for="eventID" class="col-form-label col-4">Choose Event:</label>
-                <div class="">
-                    <div class="">
-                        <select name="eventID" id="eventID" th:field="*{eventsID}" required>
-                            <option th:value="${event.id}" th:text="${event.id}" th:each="event: ${listEvents}"  th:if="${event.getZip() == user.getZipcode() && event.getStatus() == 'active'}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label col-4">Item</label>
-                <div class="">
-                    <label>
-                        <input type="text" th:field="*{item}" class="form-control" required/>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label col-4">Volume</label>
-                <div class="">
-                    <label>
-                        <input type="number" class="form-control" name="test_name" min="0" oninput="validity.valid||(value='');" th:field="*{volume}" required/>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label col-4">Expiration Date</label>
-                <div class="">
-                    <label>
-                        <input type="text" th:field="*{expire}" class="form-control" required/>
-                    </label>
-                </div>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Submit Request</button>
-            </div>
         </div>
     </form>
 </div>

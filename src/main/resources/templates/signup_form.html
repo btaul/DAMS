@@ -64,7 +64,7 @@
                 <label class="col-form-label col-4">Zipcode</label>
                 <div class="">
                     <label>
-                        <input type="text" class="form-control" th:field="*{zipcode}" required/>
+                        <input type="number" class="form-control" th:field="*{zipcode}" name="test_name" min="0" oninput="validity.valid||(value='');" required/>
                     </label>
                 </div>
             </div>

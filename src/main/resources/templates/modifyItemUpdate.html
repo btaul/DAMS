@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <title>Choose Item</title>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post">
+            <input type="submit" value="Sign Out">
+            <p>
+                Time to Update Items!!!!
+            </p>
+        </form>
+    </div>
+    <form th:action="@{'/modifyApprovedItems/' +${item.iditems} + '/update/done'}" method="post"
+          style="max-width: 600px; margin: 0 auto;"
+          th:object="${item}"
+    >
+        <div class="form-group row">
+            <label class="col-form-label col-4">Item</label>
+            <div class="">
+                <input type="text" class="form-control" required th:field="*{item}" />
+            </div>
+        </div>
+        <div class="form-group row" hidden>
+            <label class="col-form-label col-4">Event</label>
+            <div class="">
+                <input type="text" class="form-control" required th:field="*{eventid}" />
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

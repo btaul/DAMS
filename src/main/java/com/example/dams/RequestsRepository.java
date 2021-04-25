@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface RequestsRepository extends JpaRepository<com.example.dams.Requests,Long> {
     @Query("SELECT u FROM Requests u WHERE u.requestID = ?1")
-    com.example.dams.Requests findByRequestID(String username);
+    com.example.dams.Requests findByRequestID(Long username);
 
     @Transactional
     @Modifying

@@ -47,6 +47,8 @@
                 <th>Volume</th>
                 <th>Remaining</th>
                 <th>Status</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -57,6 +59,16 @@
                 <td th:text="${requests.getVolume()}">Volume</td>
                 <td th:text="${requests.getRemaining()}">Remaining</td>
                 <td th:text="${requests.getStatus()}">Status</td>
+                <td><form th:action="@{'/update_request/' + ${requests.getRequestsID()}}" method="post">
+                    <div>
+                        <button type="submit">Update</button>
+                    </div>
+                </form></td>
+                <td><form th:action="@{'/delete_request/' +${requests.getRequestsID()}}" method="post">
+                    <div>
+                        <button type="submit">Delete</button>
+                    </div>
+                </form></td>
             </tr>
             </tbody>
         </table>
