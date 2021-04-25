@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Shipping Information - DAMS</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+            </p>
+            <input type="submit" value="Sign Out">
+        </form>
+    </div>
+    <div>
+        <h1>Update Shipping</h1>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/showNewDonationForm}" >Make a Pledge</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/responseToRequest}" >Make a Response</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/backtoDonation}" >Go to your Donation</a>
+    </div>
+    <div th:if="${user.getRole() == 'donor'}">
+        <a th:href = "@{/list_events}"> Back to Event List</a>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr th:if="${user.getRole() == 'donor'}">
+                <th>Donation Item</th>
+                <th>Donation Volume</th>
+                <th>Zip Code</th>
+                <th>Update Shipping Status</th>
+                <th>Ship Items</th>
+            </tr>
+            </thead>
+            <tr>
+                <td th:text="${donation.item}"></td>
+                <td th:text="${donation.donationVolume}"></td>
+                <td th:text="${donation.zip}"></td>
+                <td th:text="${donation.shipping}"></td>
+                <td>
+                    <a th:if="${donation.getApproved() == 'Y'}" target="_blank" rel="noopener noreferrer" href="https://tools.usps.com/find-location.htm" class="btn btn-dark">Send Items</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <form action="#" th:action="@{/saveShipping}" th:object="${donation}"
+          method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}" th:value="${donation.id}" />
+        <input type="hidden" th:field="*{zip}" th:value="${donation.zip}" />
+        <input type="hidden" th:field="*{donorId}" th:value="${donation.donorId}" />
+        <input type="hidden" th:field="*{item}" th:value="${donation.item}" />
+        <input type="hidden" th:field="*{donationVolume}" th:value="${donation.donationVolume}" />
+        <input type="hidden" th:field="*{eventId}" th:value="${donation.eventId}" />
+        <input type="hidden" th:field="*{pledge}" th:value="${donation.pledge}" />
+        <input type="hidden" th:field="*{approved}" th:value="${donation.approved}" />
+<!--        <input type="text" th:field="*{shipping}" th:value="${donation.shipping}" class="form-control mb-4 col-4"/>-->
+        <div class="form-group row">
+            <label class="col-form-label col-4">Shipping Status</label>
+            <select name="status" id="status" th:field="*{shipping}" required>
+                <option value= ""></option>
+                <option value="pending">Pending</option>
+                <option value="shipping">Shipping</option>
+                <option value="delivered">Delivered</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info col-2">Update Shipping</button>
+    </form>
+
+<!--    <form th:action="@{/shipping/{id}(id=${donation.id})}" method="post"-->
+<!--          style="max-width: 600px; margin: 0 auto;"-->
+<!--          th:object="${donation}"-->
+<!--    >-->
+<!--        <div class="m-3">-->
+<!--            <input type="hidden" th:field="*{id}" />-->
+<!--            <div class="form-group row">-->
+<!--                <label class="col-form-label col-4">Status</label>-->
+<!--                <div class="">-->
+<!--                    <select name="status" id="status" th:field="*{shipping}" required>-->
+<!--                        <option value= ""></option>-->
+<!--                        <option value="pending">Pending</option>-->
+<!--                        <option value="shipping">Shipping</option>-->
+<!--                        <option value="delivered">Delivered</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button type="submit" class="btn btn-primary">Update Donation</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+</div>
+</body>
+</html>
