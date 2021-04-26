@@ -80,6 +80,66 @@ public class AppController {
         return "redirect:/list_users";
     }
 
+    @GetMapping("/account_retrieval")
+    public String accountR(){
+        return "account_retrieval";
+    }
+
+    @PostMapping("/account_retrieval/id")
+    public String accountRetrieval(@ModelAttribute("user") User user, Model model){
+        User checkUserValid = repo.findByUsername(user.getUsername());
+        if(checkUserValid == null){
+            model.addAttribute("errors", user.getUsername() + " does not exist");
+            return "account_retrieval";
+        }
+        User newUser = repo.findByUsername(user.getUsername());
+        newUser.setAnswer1(null);
+        newUser.setAnswer2(null);
+        model.addAttribute("sec", newUser);
+        return "account_questions";
+    }
+
+    @PostMapping("/security_questions")
+    public String displaySecurityQuestions(@ModelAttribute("user") User user, Model model){
+        User validUser = repo.findByUsername(user.getUsername());
+        if(!validUser.getAnswer1().equals(user.getAnswer1())){
+            User newUser = repo.findByUsername(user.getUsername());
+            newUser.setAnswer1(null);
+            newUser.setAnswer2(null);
+            model.addAttribute("sec", newUser);
+            model.addAttribute("errors","answer 1 is wrong");
+            return "account_questions";
+        }
+        if(!validUser.getAnswer2().equals(user.getAnswer2())){
+            User newUser = repo.findByUsername(user.getUsername());
+            newUser.setAnswer1(null);
+            newUser.setAnswer2(null);
+            model.addAttribute("sec", newUser);
+            model.addAttribute("errors","answer 2 is wrong");
+            return "account_questions";
+        }
+        model.addAttribute("user", repo.findByUsername(user.getUsername()));
+        return "update_password";
+    }
+
+    @PostMapping("/security_questions/redirect")
+    public String redirectRetrieval(@ModelAttribute("user") User user, Model model){
+        ValidPassword2 uvp = new ValidPassword2();
+        if(uvp.hasErrors(user.getPassword()) && user.getPassword() != null){
+            model.addAttribute("errors", uvp.getErrors());
+            return "update_password";
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+        User modifiedUser = repo.findByUsername(user.getUsername());
+        modifiedUser.setPassword(encodedPassword);
+        modifiedUser.setAnswer1(user.getAnswer1());
+        modifiedUser.setAnswer2(user.getAnswer2());
+        modifiedUser.setZipcode(user.getZipcode());
+        repo.save(modifiedUser);
+        return "redirect:/list_users";
+    }
+
     @GetMapping("/create")
     public String showCreateEvent(Model model){
         model.addAttribute("event", new Event());

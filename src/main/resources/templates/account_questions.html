@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Security Questions</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <form th:object="${sec}" th:action="@{/security_questions}" method="post">
+        <div class="form-group row" hidden>
+            <label class="col-form-label col-4">Username</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control"  th:field="${sec.username}"  required/>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Security Question 1</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control"  th:field="${sec.question1}" disabled/>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Answer 1</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" required th:field="${sec.answer1}"/>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Security Question 2</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control"  th:field="${sec.question2}" disabled/>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Answer 2</label>
+            <div class="">
+                <label>
+                    <input type="text" class="form-control" required th:field="${sec.answer2}"/>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4"></label>
+            <div class="">
+                <div th:if="${errors != null}" class="alert alert-danger notification" role="alert">
+                    <p th:each = "i: ${errors}" th:text="${i}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4"></label>
+            <div class="">
+                <button type="submit" class="btn btn-primary">Check Answers</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
